@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGlow" cx="50%" cy="50%" r="65%">
+      <stop offset="0%" stop-color="#1c2b20"/>
+      <stop offset="60%" stop-color="#0d140e"/>
+      <stop offset="100%" stop-color="#050805"/>
+    </radialGradient>
+
+    <!-- Metallic Gold/Amber Accent Gradient -->
+    <linearGradient id="tacticalGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD700"/>
+      <stop offset="50%" stop-color="#FFA500"/>
+      <stop offset="100%" stop-color="#CC7A00"/>
+    </linearGradient>
+
+    <!-- Olive Tactical Arrow Gradient -->
+    <linearGradient id="arrowGrad" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#556B2F"/>
+      <stop offset="100%" stop-color="#2E3B18"/>
+    </linearGradient>
+
+    <!-- Soft Glow Filter -->
+    <filter id="hudGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Base App Icon Container (Rounded Rectangle) -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGlow)"/>
+  
+  <!-- Outer Tactical Border -->
+  <rect x="16" y="16" width="480" height="480" rx="96" fill="none" stroke="#4A5D32" stroke-width="3" stroke-opacity="0.4"/>
+
+  <!-- GRID & RADAR ELEMENTS -->
+  <g stroke="#4A5D32" stroke-opacity="0.3" stroke-width="2" fill="none">
+    <!-- Radar Concentric Rings -->
+    <circle cx="256" cy="256" r="190"/>
+    <circle cx="256" cy="256" r="130" stroke-dasharray="8 6"/>
+    <circle cx="256" cy="256" r="70"/>
+
+    <!-- Crosshairs (Grid Lines) -->
+    <line x1="256" y1="40" x2="256" y2="472"/>
+    <line x1="40" y1="256" x2="472" y2="256"/>
+    
+    <!-- Diagonal Guides -->
+    <line x1="120" y1="120" x2="392" y2="392" stroke-dasharray="4 4"/>
+    <line x1="392" y1="120" x2="120" y2="392" stroke-dasharray="4 4"/>
+  </g>
+
+  <!-- COMPASS CARDINAL MARKS (Ticks & Text) -->
+  <g fill="url(#tacticalGold)" stroke="url(#tacticalGold)" filter="url(#hudGlow)">
+    <!-- North Marker -->
+    <path d="M256 50 L263 70 H249 Z"/>
+    <text x="256" y="42" font-family="'Courier New', Courier, monospace" font-size="20" font-weight="900" text-anchor="middle" stroke="none">N</text>
+    
+    <!-- East, South, West Ticks -->
+    <rect x="446" y="253" width="16" height="6" rx="2" stroke="none"/>
+    <rect x="253" y="446" width="6" height="16" rx="2" stroke="none"/>
+    <rect x="50" y="253" width="16" height="6" rx="2" stroke="none"/>
+  </g>
+
+  <!-- CORNER HUD BRACKETS -->
+  <path d="M 80 120 H 120 V 80" fill="none" stroke="url(#tacticalGold)" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 432 120 H 392 V 80" fill="none" stroke="url(#tacticalGold)" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 80 392 H 120 V 432" fill="none" stroke="url(#tacticalGold)" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 432 392 H 392 V 432" fill="none" stroke="url(#tacticalGold)" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- CENTRAL TACTICAL NAVIGATION ARROW / CHEVRON -->
+  <g transform="translate(0, -10)">
+    <!-- Shadow for Depth -->
+    <path d="M256 120 L350 340 L256 290 L162 340 Z" fill="#000000" opacity="0.5"/>
+
+    <!-- Left Wing (Darker Shade for 3D Facet) -->
+    <path d="M256 120 L162 340 L256 290 Z" fill="#3B4A20" stroke="#1A240E" stroke-width="2"/>
+
+    <!-- Right Wing (Lighter Olive) -->
+    <path d="M256 120 L256 290 L350 340 Z" fill="url(#arrowGrad)" stroke="#1A240E" stroke-width="2"/>
+
+    <!-- Center Accent Line -->
+    <line x1="256" y1="120" x2="256" y2="290" stroke="url(#tacticalGold)" stroke-width="3" stroke-linecap="round" filter="url(#hudGlow)"/>
+  </g>
+
+  <!-- TARGET RETICLE OVERLAY (Center) -->
+  <g stroke="url(#tacticalGold)" stroke-width="3" fill="none" filter="url(#hudGlow)">
+    <!-- Center Reticle Ring -->
+    <circle cx="256" cy="246" r="36" stroke-dasharray="18 10"/>
+    
+    <!-- Reticle Center Dot -->
+    <circle cx="256" cy="246" r="4" fill="url(#tacticalGold)"/>
+  </g>
+
+  <!-- MILITARY COORDINATES DISPLAY (Bottom HUD) -->
+  <g fill="url(#tacticalGold)" font-family="'Courier New', Courier, monospace" font-size="14" font-weight="bold" opacity="0.8">
+    <text x="256" y="420" text-anchor="middle" letter-spacing="3">34°42'03"N  135°19'32"E</text>
+  </g>
+</svg>

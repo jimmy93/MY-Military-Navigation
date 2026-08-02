@@ -1,0 +1,296 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
+  <defs>
+    <!-- Dark Metallic Outer Rim Gradient -->
+    <radialGradient id="rim-bevel" cx="30%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#434955" />
+      <stop offset="40%" stop-color="#23272e" />
+      <stop offset="90%" stop-color="#0f1115" />
+      <stop offset="100%" stop-color="#050608" />
+    </radialGradient>
+
+    <!-- Dial Surface Gradient -->
+    <radialGradient id="dial-face" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1c2026" />
+      <stop offset="75%" stop-color="#111317" />
+      <stop offset="100%" stop-color="#0a0b0d" />
+    </radialGradient>
+
+    <!-- Brass Highlight / Inner Ring Accent -->
+    <linearGradient id="brass-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c89b3c" />
+      <stop offset="50%" stop-color="#f3e08f" />
+      <stop offset="100%" stop-color="#8a651b" />
+    </linearGradient>
+
+    <!-- North Needle - Red Gradient -->
+    <linearGradient id="needle-n-light" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff4d4d" />
+      <stop offset="100%" stop-color="#cc0000" />
+    </linearGradient>
+    <linearGradient id="needle-n-dark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#990000" />
+      <stop offset="100%" stop-color="#550000" />
+    </linearGradient>
+
+    <!-- South Needle - Silver/Dark Metallic Gradient -->
+    <linearGradient id="needle-s-light" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e0e6ed" />
+      <stop offset="100%" stop-color="#9aa5b1" />
+    </linearGradient>
+    <linearGradient id="needle-s-dark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#627d98" />
+      <stop offset="100%" stop-color="#334e68" />
+    </linearGradient>
+
+    <!-- Drop Shadow Filter -->
+    <filter id="drop-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="3" dy="5" stdDeviation="5" flood-color="#000000" flood-opacity="0.8"/>
+    </filter>
+    
+    <!-- Phosphor Glow Filter -->
+    <filter id="glow-phosphor" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1.5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Glass Reflection Highlight -->
+    <linearGradient id="glass-glare" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.15" />
+      <stop offset="30%" stop-color="#ffffff" stop-opacity="0.03" />
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.0" />
+    </linearGradient>
+
+    <!-- Reusable Tick Marks -->
+    <path id="tick-100" d="M 400 112 L 400 130" stroke="#00ff66" stroke-width="2.5" stroke-linecap="round"/>
+    <path id="tick-50" d="M 400 112 L 400 124" stroke="#00cc52" stroke-width="1.8" stroke-linecap="round"/>
+    <path id="tick-10" d="M 400 112 L 400 119" stroke="#008837" stroke-width="1" opacity="0.8"/>
+  </defs>
+
+  <!-- ================= BASE / CASING ================= -->
+  <circle cx="400" cy="400" r="380" fill="url(#rim-bevel)" filter="url(#drop-shadow)"/>
+  
+  <!-- Outer Tactical Ribs -->
+  <g stroke="#1a1d24" stroke-width="4" opacity="0.6">
+    <line x1="400" y1="20" x2="400" y2="30"/>
+    <line x1="400" y1="770" x2="400" y2="780"/>
+    <line x1="20" y1="400" x2="30" y2="400"/>
+    <line x1="770" y1="400" x2="780" y2="400"/>
+    <line x1="131" y1="131" x2="138" y2="138"/>
+    <line x1="662" y1="662" x2="669" y2="669"/>
+    <line x1="131" y1="662" x2="138" y2="655"/>
+    <line x1="662" y1="131" x2="669" y2="138"/>
+  </g>
+
+  <!-- Inner Bezel Ring -->
+  <circle cx="400" cy="400" r="350" fill="none" stroke="#2c313a" stroke-width="6"/>
+  <circle cx="400" cy="400" r="344" fill="none" stroke="url(#brass-grad)" stroke-width="2" opacity="0.8"/>
+  <circle cx="400" cy="400" r="340" fill="url(#dial-face)"/>
+
+  <!-- ================= DIAL MARKINGS ================= -->
+
+  <!-- TECHNICAL GRID / ARTILLERY CROSSHAIRS -->
+  <g stroke="#00ff66" opacity="0.15" stroke-width="1">
+    <circle cx="400" cy="400" r="180" fill="none" stroke-dasharray="4 4"/>
+    <circle cx="400" cy="400" r="100" fill="none"/>
+    <line x1="400" y1="140" x2="400" y2="660"/>
+    <line x1="140" y1="400" x2="660" y2="400"/>
+  </g>
+
+  <!-- 6400 NATO MIL GRADUATION TICKS -->
+  <g filter="url(#glow-phosphor)">
+    <!-- 10 Mil Minor Ticks -->
+    <g opacity="0.8">
+      <circle cx="400" cy="400" r="285" fill="none" stroke="#00ff66" stroke-width="6" stroke-dasharray="0.6 2.22" opacity="0.4"/>
+    </g>
+
+    <!-- 50 Mil Medium Ticks -->
+    <circle cx="400" cy="400" r="282" fill="none" stroke="#00cc52" stroke-width="10" stroke-dasharray="1.2 13.92" opacity="0.7"/>
+
+    <!-- 100 MIL MAJOR TICKS & ROTATED NUMERIC LABELS -->
+    <!-- 00 / 64 (NORTH) -->
+    <use href="#tick-100" transform="rotate(0 400 400)"/>
+    <text x="400" y="152" fill="#00ff66" font-family="Courier New, monospace" font-weight="900" font-size="16" text-anchor="middle">0</text>
+
+    <!-- 02 (11.25°) -->
+    <use href="#tick-100" transform="rotate(11.25 400 400)"/>
+    <text x="453" y="157" fill="#00ff66" font-family="Courier New, monospace" font-weight="700" font-size="13" text-anchor="middle" transform="rotate(11.25 453 157)">2</text>
+
+    <!-- 04 (22.5°) -->
+    <use href="#tick-100" transform="rotate(22.5 400 400)"/>
+    <text x="503" y="172" fill="#00ff66" font-family="Courier New, monospace" font-weight="700" font-size="13" text-anchor="middle" transform="rotate(22.5 503 172)">4</text>
+
+    <!-- 06 (33.75°) -->
+    <use href="#tick-100" transform="rotate(33.75 400 400)"/>
+    <text x="548" y="197" fill="#00ff66" font-family="Courier New, monospace" font-weight="700" font-size="13" text-anchor="middle" transform="rotate(33.75 548 197)">6</text>
+
+    <!-- 08 (45°) -->
+    <use href="#tick-100" transform="rotate(45 400 400)"/>
+    <text x="585" y="231" fill="#00ff66" font-family="Courier New, monospace" font-weight="900" font-size="15" text-anchor="middle" transform="rotate(45 585 231)">8</text>
+
+    <!-- 10 (56.25°) -->
+    <use href="#tick-100" transform="rotate(56.25 400 400)"/>
+    <text x="613" y="273" fill="#00ff66" font-family="Courier New, monospace" font-weight="700" font-size="13" text-anchor="middle" transform="rotate(56.25 613 273)">10</text>
+
+    <!-- 12 (67.5°) -->
+    <use href="#tick-100" transform="rotate(67.5 400 400)"/>
+    <text x="630" y="322" fill="#00ff66" font-family="Courier New, monospace" font-weight="700" font-size="13" text-anchor="middle" transform="rotate(67.5 630 322)">12</text>
+
+    <!-- 14 (78.75°) -->
+    <use href="#tick-100" transform="rotate(78.75 400 400)"/>
+    <text x="637" y="373" fill="#00ff66" font-family="Courier New, monospace" font-weight="700" font-size="13" text-anchor="middle" transform="rotate(78.75 637 373)">14</text>
+
+    <!-- 16 (90°) - ROTATED TO MATCH -->
+    <use href="#tick-100" transform="rotate(90 400 400)"/>
+    <text x="648" y="405" fill="#00ff66" font-family="Courier New, monospace" font-weight="900" font-size="16" text-anchor="middle" transform="rotate(90 648 405)">16</text>
+
+    <!-- 18 (101.25°) -->
+    <use href="#tick-100" transform="rotate(101.25 400 400)"/>
+    <text x="637" y="437" fill="#00ff66" font-family="Courier New, monospace" font-weight="700" font-size="13" text-anchor="middle" transform="rotate(101.25 637 437)">18</text>
+
+    <!-- 20 (112.5°) -->
+    <use href="#tick-100" transform="rotate(112.5 400 400)"/>
+    <text x="630" y="488" fill="#00ff66" font-family="Courier New, monospace" font-weight="700" font-size="13" text-anchor="middle" transform="rotate(112.5 630 488)">20</text>
+
+    <!-- 22 (123.75°) -->
+    <use href="#tick-100" transform="rotate(123.75 400 400)"/>
+    <text x="613" y="537" fill="#00ff66" font-family="Courier New, monospace" font-weight="700" font-size="13" text-anchor="middle" transform="rotate(123.75 613 537)">22</text>
+
+    <!-- 24 (135°) -->
+    <use href="#tick-100" transform="rotate(135 400 400)"/>
+    <text x="585" y="579" fill="#00ff66" font-family="Courier New, monospace" font-weight="900" font-size="15" text-anchor="middle" transform="rotate(135 585 579)">24</text>
+
+    <!-- 26 (146.25°) -->
+    <use href="#tick-100" transform="rotate(146.25 400 400)"/>
+    <text x="548" y="613" fill="#00ff66" font-family="Courier New, monospace" font-weight="700" font-size="13" text-anchor="middle" transform="rotate(146.25 548 613)">26</text>
+
+    <!-- 28 (157.5°) -->
+    <use href="#tick-100" transform="rotate(157.5 400 400)"/>
+    <text x="503" y="638" fill="#00ff66" font-family="Courier New, monospace" font-weight="700" font-size="13" text-anchor="middle" transform="rotate(157.5 503 638)">28</text>
+
+    <!-- 30 (168.75°) -->
+    <use href="#tick-100" transform="rotate(168.75 400 400)"/>
+    <text x="453" y="653" fill="#00ff66" font-family="Courier New, monospace" font-weight="700" font-size="13" text-anchor="middle" transform="rotate(168.75 453 653)">30</text>
+
+    <!-- 32 (180°) - ROTATED TO MATCH -->
+    <use href="#tick-100" transform="rotate(180 400 400)"/>
+    <text x="400" y="648" fill="#00ff66" font-family="Courier New, monospace" font-weight="900" font-size="16" text-anchor="middle" transform="rotate(180 400 648)">32</text>
+
+    <!-- 34 (191.25°) -->
+    <use href="#tick-100" transform="rotate(191.25 400 400)"/>
+    <text x="347" y="653" fill="#00ff66" font-family="Courier New, monospace" font-weight="700" font-size="13" text-anchor="middle" transform="rotate(191.25 347 653)">34</text>
+
+    <!-- 36 (202.5°) -->
+    <use href="#tick-100" transform="rotate(202.5 400 400)"/>
+    <text x="297" y="638" fill="#00ff66" font-family="Courier New, monospace" font-weight="700" font-size="13" text-anchor="middle" transform="rotate(202.5 297 638)">36</text>
+
+    <!-- 38 (213.75°) -->
+    <use href="#tick-100" transform="rotate(213.75 400 400)"/>
+    <text x="252" y="613" fill="#00ff66" font-family="Courier New, monospace" font-weight="700" font-size="13" text-anchor="middle" transform="rotate(213.75 252 613)">38</text>
+
+    <!-- 40 (225°) -->
+    <use href="#tick-100" transform="rotate(225 400 400)"/>
+    <text x="215" y="579" fill="#00ff66" font-family="Courier New, monospace" font-weight="900" font-size="15" text-anchor="middle" transform="rotate(225 215 579)">40</text>
+
+    <!-- 42 (236.25°) -->
+    <use href="#tick-100" transform="rotate(236.25 400 400)"/>
+    <text x="187" y="537" fill="#00ff66" font-family="Courier New, monospace" font-weight="700" font-size="13" text-anchor="middle" transform="rotate(236.25 187 537)">42</text>
+
+    <!-- 44 (247.5°) -->
+    <use href="#tick-100" transform="rotate(247.5 400 400)"/>
+    <text x="170" y="488" fill="#00ff66" font-family="Courier New, monospace" font-weight="700" font-size="13" text-anchor="middle" transform="rotate(247.5 170 488)">44</text>
+
+    <!-- 46 (258.75°) -->
+    <use href="#tick-100" transform="rotate(258.75 400 400)"/>
+    <text x="163" y="437" fill="#00ff66" font-family="Courier New, monospace" font-weight="700" font-size="13" text-anchor="middle" transform="rotate(258.75 163 437)">46</text>
+
+    <!-- 48 (270°) - ROTATED TO MATCH -->
+    <use href="#tick-100" transform="rotate(270 400 400)"/>
+    <text x="152" y="405" fill="#00ff66" font-family="Courier New, monospace" font-weight="900" font-size="16" text-anchor="middle" transform="rotate(270 152 405)">48</text>
+
+    <!-- 50 (281.25°) -->
+    <use href="#tick-100" transform="rotate(281.25 400 400)"/>
+    <text x="163" y="373" fill="#00ff66" font-family="Courier New, monospace" font-weight="700" font-size="13" text-anchor="middle" transform="rotate(281.25 163 373)">50</text>
+
+    <!-- 52 (292.5°) -->
+    <use href="#tick-100" transform="rotate(292.5 400 400)"/>
+    <text x="170" y="322" fill="#00ff66" font-family="Courier New, monospace" font-weight="700" font-size="13" text-anchor="middle" transform="rotate(292.5 170 322)">52</text>
+
+    <!-- 54 (303.75°) -->
+    <use href="#tick-100" transform="rotate(303.75 400 400)"/>
+    <text x="187" y="273" fill="#00ff66" font-family="Courier New, monospace" font-weight="700" font-size="13" text-anchor="middle" transform="rotate(303.75 187 273)">54</text>
+
+    <!-- 56 (315°) -->
+    <use href="#tick-100" transform="rotate(315 400 400)"/>
+    <text x="215" y="231" fill="#00ff66" font-family="Courier New, monospace" font-weight="900" font-size="15" text-anchor="middle" transform="rotate(315 215 231)">56</text>
+
+    <!-- 58 (326.25°) -->
+    <use href="#tick-100" transform="rotate(326.25 400 400)"/>
+    <text x="252" y="197" fill="#00ff66" font-family="Courier New, monospace" font-weight="700" font-size="13" text-anchor="middle" transform="rotate(326.25 252 197)">58</text>
+
+    <!-- 60 (337.5°) -->
+    <use href="#tick-100" transform="rotate(337.5 400 400)"/>
+    <text x="297" y="172" fill="#00ff66" font-family="Courier New, monospace" font-weight="700" font-size="13" text-anchor="middle" transform="rotate(337.5 297 172)">60</text>
+
+    <!-- 62 (348.75°) -->
+    <use href="#tick-100" transform="rotate(348.75 400 400)"/>
+    <text x="347" y="157" fill="#00ff66" font-family="Courier New, monospace" font-weight="700" font-size="13" text-anchor="middle" transform="rotate(348.75 347 157)">62</text>
+  </g>
+
+  <!-- INNER DEGREE SCALE -->
+  <g opacity="0.5" font-family="Arial, sans-serif" font-size="9" fill="#e0e6ed" text-anchor="middle">
+    <circle cx="400" cy="400" r="230" fill="none" stroke="#627d98" stroke-width="1" stroke-dasharray="2 4"/>
+    <text x="400" y="180">0°</text>
+    <text x="625" y="403">90°</text>
+    <text x="400" y="628">180°</text>
+    <text x="175" y="403">270°</text>
+  </g>
+
+  <!-- CARDINAL DIRECTION LABELS -->
+  <g font-family="Impact, Arial Black, sans-serif" font-size="36" font-weight="bold" text-anchor="middle" dominant-baseline="central" filter="url(#glow-phosphor)">
+    <text x="400" y="210" fill="#ff3333">N</text>
+    <text x="590" y="400" fill="#00ff66">E</text>
+    <text x="400" y="590" fill="#00ff66">S</text>
+    <text x="210" y="400" fill="#00ff66">W</text>
+  </g>
+
+  <!-- ORDINAL LABELS -->
+  <g font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#00cc52" text-anchor="middle" dominant-baseline="central" opacity="0.7">
+    <text x="530" y="270">NE</text>
+    <text x="530" y="530">SE</text>
+    <text x="270" y="530">SW</text>
+    <text x="270" y="270">NW</text>
+  </g>
+
+  <!-- DIAL TEXT -->
+  <g font-family="Courier New, monospace" text-anchor="middle" fill="#00ff66" opacity="0.6">
+    <text x="400" y="330" font-size="11" letter-spacing="2">6400 MIL / 360°</text>
+    <text x="400" y="470" font-size="10" letter-spacing="1">1 MIL ≈ 1m @ 1000m</text>
+    <text x="400" y="485" font-size="9" fill="#627d98">NATO STANDARD</text>
+  </g>
+
+  <!-- ================= SEPARATE COMPASS NEEDLE CODE ================= -->
+  <!-- Change the angle in transform="rotate(ANGLE 400 400)" to rotate needle independently -->
+  <g id="compass-needle" transform="rotate(15.75 400 400)" filter="url(#drop-shadow)">
+    <!-- NORTH NEEDLE (RED) -->
+    <polygon points="400,400 378,400 393,130 400,105" fill="url(#needle-n-light)" />
+    <polygon points="400,400 422,400 407,130 400,105" fill="url(#needle-n-dark)" />
+    <polygon points="400,140 396,260 404,260" fill="#00ff66" filter="url(#glow-phosphor)" opacity="0.9"/>
+
+    <!-- SOUTH NEEDLE (SILVER) -->
+    <polygon points="400,400 378,400 393,670 400,695" fill="url(#needle-s-light)" />
+    <polygon points="400,400 422,400 407,670 400,695" fill="url(#needle-s-dark)" />
+    <circle cx="400" cy="650" r="4" fill="#00ff66" filter="url(#glow-phosphor)" opacity="0.8"/>
+
+    <!-- CENTER PIVOT -->
+    <circle cx="400" cy="400" r="32" fill="url(#rim-bevel)"/>
+    <circle cx="400" cy="400" r="25" fill="url(#brass-grad)"/>
+    <circle cx="400" cy="400" r="18" fill="#0f1115"/>
+    <circle cx="400" cy="400" r="8" fill="url(#brass-grad)"/>
+    <circle cx="398" cy="398" r="3" fill="#ff3366" opacity="0.8"/>
+  </g>
+
+  <!-- ================= GLASS COVER / GLARE EFFECT ================= -->
+  <circle cx="400" cy="400" r="341" fill="none" stroke="#ffffff" stroke-width="1.5" opacity="0.2"/>
+  <path d="M 160 250 A 340 340 0 0 1 640 250 A 340 340 0 0 0 160 250 Z" fill="url(#glass-glare)"/>
+  <ellipse cx="400" cy="120" rx="180" ry="40" fill="url(#glass-glare)" opacity="0.6"/>
+</svg>
