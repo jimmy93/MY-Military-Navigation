@@ -52,12 +52,12 @@ var App = (function() {
       ulat = pos.coords.latitude; ulng = pos.coords.longitude; uacc = pos.coords.accuracy;
       autoDetectRegion(ulat, ulng);
       gpsOn = true; setGPS(true); updPosReadout(); updAcc();
-      MapView.updPosition(ulat, ulng, uacc); updNavReadout();
+      MapView.updPosition(ulat, ulng, uacc); updNavReadout(); updGoNav();
     }, function() { setGPS(false); }, { enableHighAccuracy: true, timeout: 10000 });
     watchId = navigator.geolocation.watchPosition(function(pos) {
       ulat = pos.coords.latitude; ulng = pos.coords.longitude; uacc = pos.coords.accuracy;
       gpsOn = true; setGPS(true); updPosReadout(); updAcc();
-      MapView.updPosition(ulat, ulng, uacc); updNavReadout();
+      MapView.updPosition(ulat, ulng, uacc); updNavReadout(); updGoNav();
     }, function() {}, { enableHighAccuracy: true, maximumAge: 2000, timeout: 10000 });
   }
 
@@ -234,6 +234,80 @@ var App = (function() {
   var navWps = [];
   function loadNavWps() { if (typeof getAllWaypoints === 'function') getAllWaypoints().then(function(w) { navWps = w; }); }
 
+  function resolveCoord(input) {
+    if (!input) return null;
+    var match = navWps.find(function(w) { return w.name.toLowerCase() === input.toLowerCase(); });
+    if (match) return { lat: match.latitude, lng: match.longitude };
+    return parseCoordinate(input, fmt);
+  }
+
+  /* ===== GO Live-Navigation Mode ===== */
+  var goActive = false;
+  var goDest = null;
+
+  function startGo() {
+    var d = byId('nav-dest').value.trim();
+    if (!d) { toast('Enter destination', 'error'); return; }
+    if (ulat == null || ulng == null) { toast('No GPS position', 'error'); return; }
+    var dp = resolveCoord(d);
+    if (!dp) { toast('Bad destination', 'error'); return; }
+    goDest = dp;
+    goActive = true;
+
+    // Bind origin to live GPS, dest from input (skip fit so zoom is preserved)
+    MapView.setNav({ lat: ulat, lng: ulng }, goDest, { skipFit: true });
+    // Center on current position and set a reasonable live-nav zoom
+    MapView.fly(ulat, ulng, 16);
+    // Switch to Track-Up and sync heading
+    if (MapView.getCompassMode() !== 'track-up') MapView.toggleCompass();
+    MapView.setHeading(Compass.getHeading());
+    // Show STOP NAV button
+    byId('btn-stop-nav').style.display = 'block';
+    byId('map-nav-panel').style.display = 'none';
+    updGoNav();
+    toast('Navigation active - Track Up');
+  }
+
+  function stopNav() {
+    goActive = false;
+    goDest = null;
+    MapView.clearNav();
+    byId('btn-stop-nav').style.display = 'none';
+    clearGoCompass();
+    // Revert to North Up when Go navigation ends
+    if (MapView.getCompassMode() === 'track-up') MapView.toggleCompass();
+    updNavReadout();
+    toast('Navigation stopped');
+  }
+
+  function updGoNav() {
+    if (!goActive || !goDest || ulat == null || ulng == null) return;
+    // Refresh the nav line without forcing a fitBounds (preserve user-controlled zoom)
+    MapView.setNav({ lat: ulat, lng: ulng }, goDest, { skipFit: true });
+    // Keep the crosshair centered on the current position at the user's chosen zoom
+    MapView.followUser();
+    var i = MapView.getNavInfo();
+    var ro = byId('map-nav-readout'), de = byId('nav-distance'), he = byId('nav-heading');
+    if (i && i.distance != null) {
+      if (ro) ro.style.display = 'flex';
+      if (de) de.textContent = i.distance >= 1000 ? (i.distance/1000).toFixed(2) + ' KM' : i.distance + ' M';
+      if (he) he.textContent = String(i.heading).padStart(4,'0') + ' MILS';
+      // Live target dot on the compass dial + compass readout
+      var bdeg = (i.heading / 6400) * 360;   // mils -> degrees bearing to target
+      Compass.setTargetBearing(bdeg);
+      var cro = byId('compass-nav-readout'), cde = byId('cnav-distance'), che = byId('cnav-heading');
+      if (cro) cro.style.display = 'flex';
+      if (cde) cde.textContent = i.distance >= 1000 ? (i.distance/1000).toFixed(2) + ' KM' : i.distance + ' M';
+      if (che) che.textContent = String(i.heading).padStart(4,'0') + ' MILS';
+    }
+  }
+
+  function clearGoCompass() {
+    Compass.clearTarget();
+    var cro = byId('compass-nav-readout');
+    if (cro) cro.style.display = 'none';
+  }
+
   function bindUI() {
     document.querySelectorAll('.nav-btn').forEach(function(b) { b.addEventListener('click', function() { switchView(b.dataset.view); }); });
 
@@ -298,15 +372,6 @@ var App = (function() {
     /* Navigation panel - auto-complete from saved waypoints */
     loadNavWps();
 
-    function resolveCoord(input) {
-      if (!input) return null;
-      // First check if it matches a saved waypoint name (exact match)
-      var match = navWps.find(function(w) { return w.name.toLowerCase() === input.toLowerCase(); });
-      if (match) return { lat: match.latitude, lng: match.longitude };
-      // Then try coordinate parsing
-      return parseCoordinate(input, fmt);
-    }
-
     function setupAutocomplete(inputId, ddId) {
       var inp = byId(inputId), dd = byId(ddId);
       if (!inp || !dd) return;
@@ -345,18 +410,10 @@ var App = (function() {
       if (!op || !dp) { toast('Bad coordinates or name not found', 'error'); return; }
       MapView.setNav(op, dp); updNavReadout();
     });
-    byId('btn-nav-go').addEventListener('click', function() {
-      var o = byId('nav-origin').value.trim(), d = byId('nav-dest').value.trim();
-      if (!o || !d) { toast('Enter both coords', 'error'); return; }
-      var op = resolveCoord(o), dp = resolveCoord(d);
-      if (!op || !dp) { toast('Bad coordinates or name not found', 'error'); return; }
-      MapView.setNav(op, dp);
-      if (MapView.getCompassMode() !== 'track-up') MapView.toggleCompass();
-      MapView.setHeading(Compass.getHeading());
-      byId('map-nav-panel').style.display = 'none';
-      toast('Navigation active - Track Up'); updNavReadout();
-    });
+    byId('btn-nav-go').addEventListener('click', startGo);
+    byId('btn-stop-nav').addEventListener('click', stopNav);
     byId('btn-nav-clear').addEventListener('click', function() {
+      if (goActive) stopNav();
       MapView.clearNav();
       byId('nav-origin').value = ''; byId('nav-dest').value = '';
       toast('Navigation cleared');

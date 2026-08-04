@@ -65,6 +65,9 @@
         <div class="compass-dial-wrap" id="compass-dial-wrap">
           <div class="compass-dial" id="compass-dial-mil" style="display:block"></div>
           <div class="compass-dial" id="compass-dial-deg" style="display:none"></div>
+          <div class="compass-target-dot-wrap" id="compass-target-dot-wrap" style="display:none">
+            <div class="compass-target-dot"></div>
+          </div>
         </div>
         <svg class="compass-needle-overlay" id="compass-needle-overlay" viewBox="0 0 800 800">
           <filter id="n-shadow">
@@ -92,6 +95,10 @@
         <button class="pos-copy-btn" id="btn-copy-pos" title="Copy position">
           <svg viewBox="0 0 115.77 122.88" width="14" height="14"><path fill="currentColor" d="M89.62,13.96v7.73h12.19v0.02c3.85,0.01,7.34,1.57,9.86,4.1c2.5,2.51,4.06,5.98,4.07,9.82h0.02v73.27v0.01h-0.02c-0.01,3.84-1.57,7.33-4.1,9.86c-2.51,2.5-5.98,4.06-9.82,4.07v0.02h-61.7H40.1v-0.02c-3.84-0.01-7.34-1.57-9.86-4.1c-2.5-2.51-4.06-5.98-4.07-9.82h-0.02V92.51H13.96v-0.02c-3.84-0.01-7.34-1.57-9.86-4.1c-2.5-2.51-4.06-5.98-4.07-9.82H0v-0.02V13.96v-0.01h0.02c0.01-3.85,1.58-7.34,4.1-9.86c2.51-2.5,5.98-4.06,9.82-4.07V0h0.02h61.7v0.02c3.85,0.01,7.34,1.57,9.86,4.1c2.5,2.51,4.06,5.98,4.07,9.82h0.02zm-10.58,7.73v-7.73h0.02c0-0.91-0.39-1.75-1.01-2.37c-0.61-0.61-1.46-1-2.37-1h-61.7v-0.02c-0.91,0-1.75,0.39-2.37,1.01c-0.61,0.61-1,1.46-1,2.37v64.59h-0.02c0,0.91,0.39,1.75,1.01,2.37c0.61,0.61,1.46,1,2.37,1h12.19V35.65h0.02c0.01-3.85,1.58-7.34,4.1-9.86c2.51-2.5,5.98-4.06,9.82-4.07H79.04zm26.14,87.23V35.65h0.02c0-0.91-0.39-1.75-1.01-2.37c-0.61-0.61-1.46-1-2.37-1h-61.7v-0.02c-0.91,0-1.75,0.39-2.37,1.01c-0.61,0.61-1,1.46-1,2.37v73.27h-0.02c0,0.91,0.39,1.75,1.01,2.37c0.61,0.61,1.46,1,2.37,1h61.7v0.02c0.91,0,1.75-0.39,2.37-1.01c0.61-0.61,1-1.46,1-2.37z"/></svg>
         </button>
+      </div>
+      <div class="compass-nav-readout" id="compass-nav-readout" style="display:none">
+        <div class="nav-item"><span class="nav-label">DST</span><span class="nav-value" id="cnav-distance">0 M</span></div>
+        <div class="nav-item"><span class="nav-label">BRG</span><span class="nav-value" id="cnav-heading">0000 MILS</span></div>
       </div>
       <div class="compass-quick-actions">
         <button class="btn btn-tactical" id="btn-format-compass">FORMAT</button>
@@ -127,6 +134,7 @@
       <div class="nav-item"><span class="nav-label">DST</span><span class="nav-value" id="nav-distance">0 M</span></div>
       <div class="nav-item"><span class="nav-label">HDG</span><span class="nav-value" id="nav-heading">0000 MILS</span></div>
     </div>
+    <button class="map-stop-nav-btn" id="btn-stop-nav" style="display:none">STOP NAV</button>
     <div class="map-nav-panel" id="map-nav-panel" style="display:none">
       <div class="nav-input-wrap">
         <input type="text" id="nav-origin" placeholder="ORIGIN (name or coords)">
@@ -138,8 +146,8 @@
       </div>
       <div class="nav-panel-btns">
         <button class="btn btn-tactical" id="btn-nav-connect">CONNECT</button>
-        <button class="btn btn-tactical-accent" id="btn-nav-go">GO</button>
         <button class="btn btn-tactical" id="btn-nav-profile">PROFILE</button>
+        <button class="btn btn-tactical-accent" id="btn-nav-go">GO</button>
         <button class="btn btn-tactical-danger" id="btn-nav-clear">CLEAR</button>
       </div>
     </div>

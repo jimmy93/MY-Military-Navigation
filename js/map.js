@@ -167,7 +167,7 @@ var MapView = (function() {
       icon: L.divIcon({ className: '', html: '<div style="width:14px;height:14px;background:' + col + ';border:2px solid #fff;transform:rotate(45deg)"></div>', iconSize: [14,14], iconAnchor: [7,7] })
     }).addTo(map).bindPopup(wp.name || 'Target');
   }
-  function setNav(orig, dest) { navOrigin = orig; navDest = dest; elevSamples = null; updNav(); if (orig && dest && map) map.fitBounds(L.latLngBounds([[orig.lat, orig.lng], [dest.lat, dest.lng]]).pad(0.3), { maxZoom: 16 }); }
+  function setNav(orig, dest, opts) { navOrigin = orig; navDest = dest; elevSamples = null; updNav(); if (opts && opts.skipFit) return; if (orig && dest && map) map.fitBounds(L.latLngBounds([[orig.lat, orig.lng], [dest.lat, dest.lng]]).pad(0.3), { maxZoom: 16 }); }
   function clearNav() { navOrigin = null; navDest = null; elevSamples = null; if (navLine) { map.removeLayer(navLine); navLine = null; } navArrows.forEach(function(a) { map.removeLayer(a); }); navArrows = []; updateReadout(); }
   function updNav() {
     if (!map) return;
@@ -205,6 +205,7 @@ var MapView = (function() {
     const targetZoom = map.getZoom() < 12 ? 16 : map.getZoom();
     map.setView([userPos.lat, userPos.lng], targetZoom);}}
   function fly(lat, lng, z) { if (map) map.setView([lat, lng], z || 15); }
+  function followUser() { if (userPos && map) map.panTo([userPos.lat, userPos.lng], { animate: false }); }
 
   /* === ELEVATION PROFILE === */
   function sampleElevationProfile() {
@@ -390,7 +391,7 @@ var MapView = (function() {
 
   return {
     init: init, setTile: setTile, updPosition: updPosition, setTarget: setTarget,
-    centerUser: centerUser, fly: fly, getNavInfo: getNavInfo, setHeading: setHeading,
+    centerUser: centerUser, fly: fly, followUser: followUser, getNavInfo: getNavInfo, setHeading: setHeading,
     getCenter: getCenter, loadWaypoints: loadWaypoints, toggleCompass: toggleCompass,
     getCompassMode: function() { return compassMode; }, setNav: setNav, clearNav: clearNav, updCrosshair: updCrosshair,
     getElevationProfile: getElevationProfile, renderElevationProfile: renderElevationProfile,

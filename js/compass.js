@@ -130,10 +130,29 @@ var Compass = (function() {
     if (el) { if (on) el.classList.add('active'); else el.classList.remove('active'); }
   }
 
+  // --- Target bearing dot on compass dial ---
+  // bearingDeg: bearing (degrees, clockwise from North) to the target.
+  // The dot lives inside compass-dial-wrap, which rotates by -heading,
+  // so rotating the dot by bearingDeg shows it at (bearing - heading)
+  // relative to the top of the ring (i.e. where to steer from current heading).
+  function setTargetBearing(bearingDeg) {
+    var wrap = document.getElementById('compass-target-dot-wrap');
+    var dot = document.querySelector('.compass-target-dot');
+    if (!wrap || !dot) return;
+    var b = ((bearingDeg % 360) + 360) % 360;
+    dot.style.setProperty('--td-rot', b + 'deg');
+    wrap.style.display = 'block';
+  }
+
+  function clearTarget() {
+    var wrap = document.getElementById('compass-target-dot-wrap');
+    if (wrap) wrap.style.display = 'none';
+  }
+
   function getHeading() { return heading; }
   function getHeadingMils() { return Math.round((heading / 360) * 6400) % 6400; }
   function onHeading(fn) { listeners.push(fn); }
   function getStatus() { return active; }
 
-  return { init: init, setUnit: setUnit, getHeading: getHeading, getHeadingMils: getHeadingMils, onHeading: onHeading, getStatus: getStatus, requestOrientation: requestOrientation };
+  return { init: init, setUnit: setUnit, getHeading: getHeading, getHeadingMils: getHeadingMils, onHeading: onHeading, getStatus: getStatus, requestOrientation: requestOrientation, setTargetBearing: setTargetBearing, clearTarget: clearTarget };
 })();
