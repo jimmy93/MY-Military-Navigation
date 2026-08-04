@@ -200,7 +200,10 @@ var MapView = (function() {
     if (targetWp && userPos && typeof haversineDistance === 'function') return { distance: Math.round(haversineDistance(userPos.lat, userPos.lng, targetWp.latitude, targetWp.longitude)), heading: bearingToMils(userPos.lat, userPos.lng, targetWp.latitude, targetWp.longitude) };
     return null;
   }
-  function centerUser() { if (userPos && map) map.setView([userPos.lat, userPos.lng], 16); }
+  
+  function centerUser() { if (userPos && map) {
+    const targetZoom = map.getZoom() < 12 ? 16 : map.getZoom();
+    map.setView([userPos.lat, userPos.lng], targetZoom);}}
   function fly(lat, lng, z) { if (map) map.setView([lat, lng], z || 15); }
 
   /* === ELEVATION PROFILE === */
