@@ -1,3 +1,4 @@
+import { getOrCreateUserId } from './storage.js';
 var App = (function() {
   var view = 'compass';
   var fmt = 'epsg-3375';
@@ -14,6 +15,7 @@ var App = (function() {
   function byId(id) { return document.getElementById(id); }
 
   function init() {
+    identifyUser();
     loadSettings();
     bindUI();
     Compass.init();
@@ -21,6 +23,21 @@ var App = (function() {
     Compass.onHeading(function(d) { MapView.setHeading(d); updNavReadout(); });
     setInterval(updNavReadout, 2000);
     refreshList();
+  }
+
+  function identifyUser() {
+    var userId = getOrCreateUserId();
+    var executeIdentify = function() {
+      if (window.umami && typeof window.umami.identify === 'function') {
+        umami.identify({
+          userId: userId,
+          preferred_unit: cunit,
+          format: fmt
+        });
+      }
+    };
+    executeIdentify();
+    window.addEventListener('load', executeIdentify);
   }
 
   function loadSettings() {

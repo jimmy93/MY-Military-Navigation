@@ -188,3 +188,15 @@ function escapeXml(str) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;');
 }
+
+export function getOrCreateUserId() {
+    let userId = localStorage.getItem('app_user_id');
+    
+    if (!userId) {
+        // Generate a random unique ID (e.g., usr_x9k2m1p0q)
+        userId = 'usr_' + Math.random().toString(36).substring(2, 9) + Date.now().toString(36);
+        localStorage.setItem('app_user_id', userId);
+    }
+    
+    return userId;
+}
