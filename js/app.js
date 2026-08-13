@@ -122,13 +122,48 @@ var App = (function() {
     setTimeout(function() { byId('wp-name').focus(); }, 100);
   }
   function closeDialog() { byId('dialog-save-waypoint').style.display = 'none'; }
+
+  /* Coordinate search dialog */
+  function openSearchDialog() {
+    byId('search-coords').value = '';
+    byId('dialog-search').style.display = 'flex';
+    setTimeout(function() { byId('search-coords').focus(); }, 100);
+  }
+  function closeSearchDialog() { byId('dialog-search').style.display = 'none'; }
+  function searchLocation() {
+    var input = byId('search-coords').value.trim();
+    if (!input) { toast('Enter coordinates', 'error'); return; }
+    var p = null;
+    try { p = parseCoordinate(input, fmt); } catch (e) { p = null; }
+    if (!p || p.lat == null || p.lng == null || isNaN(p.lat) || isNaN(p.lng)) {
+      toast('Invalid coordinates', 'error'); return;
+    }
+    closeSearchDialog();
+    MapView.fly(p.lat, p.lng, 16);
+    toast('Flying to: ' + formatCoordinate(p.lat, p.lng, fmt));
+  }
   function setColor(c) { document.querySelectorAll('#wp-color-selector .color-btn').forEach(function(b) { if (b.dataset.color === c) b.classList.add('selected'); else b.classList.remove('selected'); }); }
   function getColor() { var s = document.querySelector('#wp-color-selector .color-btn.selected'); return s ? s.dataset.color : 'green'; }
 
   async function saveFromDialog() {
     var n = byId('wp-name').value.trim();
     if (!n) { toast('Name required', 'error'); return; }
-    var lat = parseFloat(byId('wp-lat').value), lng = parseFloat(byId('wp-lng').value);
+    // Prefer the visible, user-editable coords field; the hidden wp-lat/wp-lng
+    // inputs only hold the original values from openDialog() and are NOT updated
+    // when the user edits wp-coords (this was the stale-coordinates bug).
+    var coordsText = byId('wp-coords').value.trim();
+    var lat, lng, parsed = null;
+    if (coordsText) {
+      try { parsed = parseCoordinate(coordsText, fmt); } catch (e) { parsed = null; }
+    }
+    if (parsed && parsed.lat != null && parsed.lng != null) {
+      lat = parsed.lat; lng = parsed.lng;
+      byId('wp-lat').value = lat; byId('wp-lng').value = lng;
+    } else if (coordsText) {
+      toast('Invalid coords', 'error'); return;
+    } else {
+      lat = parseFloat(byId('wp-lat').value); lng = parseFloat(byId('wp-lng').value);
+    }
     if (isNaN(lat) || isNaN(lng)) { toast('Invalid coords', 'error'); return; }
     var id = byId('wp-id').value;
     var wp = { name: n, description: byId('wp-desc').value.trim(), latitude: lat, longitude: lng, color: getColor(), updatedAt: Date.now() };
@@ -370,6 +405,11 @@ var App = (function() {
 
     /* Map FABs */
     byId('fab-locate').addEventListener('click', function() { MapView.centerUser(); });
+    byId('fab-search').addEventListener('click', openSearchDialog);
+    byId('btn-search-go').addEventListener('click', searchLocation);
+    byId('btn-search-cancel').addEventListener('click', closeSearchDialog);
+    byId('search-coords').addEventListener('keydown', function(e) { if (e.key === 'Enter') searchLocation(); });
+    byId('dialog-search').addEventListener('click', function(e) { if (e.target === byId('dialog-search')) closeSearchDialog(); });
     byId('fab-layer').addEventListener('click', function() {
       var t = ['satellite','topographic','hybrid']; mtype = t[(t.indexOf(mtype)+1)%3];
       MapView.setTile(mtype); saveSettings();
