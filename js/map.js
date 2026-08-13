@@ -20,12 +20,15 @@ var MapView = (function() {
   var elevSamples = null;
   var elevCanvas = null;
 
+  // maxNativeZoom = highest zoom the tile server actually provides.
+  // Beyond it, Leaflet upscales the native tiles instead of requesting
+  // non-existent ones (OpenTopoMap errors past z17 with placeholder tiles).
   var tiles = {
-    satellite: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-    // topographic: 'http://localhost:8081/{z}/{x}/{y}.png',
-    topographic: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
-    hybrid: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-    hybridLabel: 'https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}'
+    satellite: { url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', maxNativeZoom: 19 },
+    // topographic: { url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', maxNativeZoom: 19 },
+    topographic: { url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', maxNativeZoom: 17 },
+    hybrid: { url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', maxNativeZoom: 19 },
+    hybridLabel: { url: 'https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', maxNativeZoom: 19 }
   };
 
   // /* Helper to convert screen drag offset when container is rotated */
@@ -88,8 +91,9 @@ var MapView = (function() {
     if (!map) return;
     if (tileLayer) map.removeLayer(tileLayer);
     if (labelLayer) map.removeLayer(labelLayer);
-    tileLayer = L.tileLayer(tiles[type] || tiles.satellite, { maxZoom: 19 }).addTo(map);
-    if (type === 'hybrid') labelLayer = L.tileLayer(tiles.hybridLabel, { maxZoom: 19, opacity: 0.8 }).addTo(map);
+    var t = tiles[type] || tiles.satellite;
+    tileLayer = L.tileLayer(t.url, { maxZoom: 19, maxNativeZoom: t.maxNativeZoom }).addTo(map);
+    if (type === 'hybrid') labelLayer = L.tileLayer(tiles.hybridLabel.url, { maxZoom: 19, maxNativeZoom: tiles.hybridLabel.maxNativeZoom, opacity: 0.8 }).addTo(map);
   }
   function getCenter() { if (!map) return null; var c = map.getCenter(); return { lat: c.lat, lng: c.lng }; }
   function updCrosshair() {
