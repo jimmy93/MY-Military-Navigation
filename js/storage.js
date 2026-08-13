@@ -189,7 +189,7 @@ function escapeXml(str) {
     .replace(/'/g, '&apos;');
 }
 
-export function getOrCreateUserId() {
+function getOrCreateUserId() {
     let userId = localStorage.getItem('app_user_id');
     
     if (!userId) {

@@ -1,4 +1,3 @@
-import { getOrCreateUserId } from './storage.js';
 var App = (function() {
   var view = 'compass';
   var fmt = 'epsg-3375';
@@ -24,22 +23,27 @@ var App = (function() {
     setInterval(updNavReadout, 2000);
     refreshList();
   }
-
+    // User identity is stored locally via getOrCreateUserId().
+    // NOTE: umami.identify() was removed because it triggers a server-side
+    // Prisma P2002 crash (Unique constraint on session_data_id) in the
+    // Umami instance at umami.jimmy.je, returning 500 on every /api/send request.
+    // getOrCreateUserId();
   function identifyUser() {
+    // Check if we already identified this user in the current browser session tab
+    if (sessionStorage.getItem('umami_identified')) return;
+
     var userId = getOrCreateUserId();
-    var executeIdentify = function() {
+
+    setTimeout(function() {
       if (window.umami && typeof window.umami.identify === 'function') {
-        umami.identify({
-          userId: userId,
+        window.umami.identify(userId, {
           preferred_unit: cunit,
           format: fmt
         });
+        sessionStorage.setItem('umami_identified', 'true');
       }
-    };
-    executeIdentify();
-    window.addEventListener('load', executeIdentify);
+    }, 500);
   }
-
   function loadSettings() {
     try { var s = JSON.parse(localStorage.getItem('tfo_settings') || '{}'); fmt = s.positionFormat || 'epsg-3375'; cunit = s.compassUnits || 'mils'; mtype = s.mapType || 'satellite'; } catch(e) {}
     applySettings();
@@ -50,7 +54,11 @@ var App = (function() {
       if (fmt === 'epsg-3375') { fmt = 'epsg-3376'; applySettings(); saveSettings(); }
     }
   }
-  function saveSettings() { localStorage.setItem('tfo_settings', JSON.stringify({ positionFormat: fmt, compassUnits: cunit, mapType: mtype })); }
+  function saveSettings() {
+    localStorage.setItem('tfo_settings', JSON.stringify({ positionFormat: fmt, compassUnits: cunit, mapType: mtype }));
+    sessionStorage.removeItem('umami_identified');
+    identifyUser();
+  }
   function applySettings() {
     var names = { 'mgrs':'MGRS', 'latlng-dd':'Lat/Lng (DD)', 'latlng-dms':'Lat/Lng (DMS)', 'epsg-3375':'GDM2000 Peninsular RSO', 'epsg-3376':'GDM2000 East Malaysia RSO', 'epsg-3168':'Kertau 1968 Malaya RSO', 'epsg-29873':'Timbalai 1948 Borneo RSO' };
     byId('format-display').textContent = names[fmt] || 'MGRS';
