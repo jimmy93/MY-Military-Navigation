@@ -6,7 +6,7 @@
 
 ## Features
 
-* **GDM2000 Datum Support:** Accurate grid and coordinate transformation standard for Malaysia (Geodetic Datum of Malaysia 2000).
+* **GDM2000 Datum Support:** Accurate grid and coordinate transformation standard for Malaysia (Geodetic Datum of Malaysia 2000), including the 9 GDM2000 State Cassini Grids (EPSG:3377–3385) for peninsular cadastral work.
 * **GPS & Live Location:** Real-time location tracking with precise grid coordinates.
 * **Digital Compass:** Field-ready compass for direction finding, bearings, and tactical heading.
 * **Elevation Profile:** Visual terrain elevation data to analyze terrain changes and route slopes.

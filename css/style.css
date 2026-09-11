@@ -838,6 +838,52 @@ body {
   text-align: left;
 }
 
+/* Collapsible position-format group (native <details>/<summary>) */
+.format-group {
+  margin-top: 4px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  grid-column: 1 / -1; /* span full width when parent is a grid */
+}
+
+.format-group > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  user-select: none;
+}
+
+.format-group > summary::-webkit-details-marker { display: none; }
+
+.format-group > summary::after {
+  content: '\25B8'; /* right-pointing small triangle */
+  font-size: 11px;
+  color: var(--text-muted);
+  transition: transform 0.15s ease;
+}
+
+.format-group[open] > summary {
+  color: var(--accent-green-bright);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.format-group[open] > summary::after {
+  transform: rotate(90deg);
+}
+
+.format-group > summary:active { border-color: var(--accent-green); }
+
+.format-suboptions {
+  padding: 4px;
+  gap: 4px;
+}
+
 /* ---------- DIALOGS ---------- */
 .dialog-overlay {
   position: fixed;

@@ -101,7 +101,7 @@ var MapView = (function() {
     var el = document.getElementById('crosshair-coords');
     var fe = document.getElementById('crosshair-format');
     var fmt = (typeof App !== 'undefined' && App.getPositionFormat) ? App.getPositionFormat() : 'mgrs';
-    var names = { 'mgrs':'MGRS','latlng-dd':'Lat/Lng (DD)','latlng-dms':'Lat/Lng (DMS)','epsg-3375':'GDM2000 Peninsular RSO','epsg-3376':'GDM2000 East Malaysia RSO','epsg-3168':'Kertau 1968 Malaya RSO','epsg-29873':'Timbalai 1948 Borneo RSO' };
+    var names = { 'mgrs':'MGRS','latlng-dd':'Lat/Lng (DD)','latlng-dms':'Lat/Lng (DMS)','epsg-3375':'GDM2000 Peninsular RSO','epsg-3376':'GDM2000 East Malaysia RSO','epsg-3168':'Kertau 1968 Malaya RSO','epsg-29873':'Timbalai 1948 Borneo RSO','epsg-3377':'GDM2000 Johor Grid','epsg-3378':'GDM2000 Sembilan & Melaka Grid','epsg-3379':'GDM2000 Pahang Grid','epsg-3380':'GDM2000 Selangor Grid','epsg-3381':'GDM2000 Terengganu Grid','epsg-3382':'GDM2000 Pinang Grid','epsg-3383':'GDM2000 Kedah & Perlis Grid','epsg-3384':'GDM2000 Perak Grid','epsg-3385':'GDM2000 Kelantan Grid' };
     if (el && typeof formatCoordinate === 'function') el.textContent = formatCoordinate(pos.lat, pos.lng, fmt);
     if (fe) fe.textContent = names[fmt] || 'MGRS';
   }

@@ -60,10 +60,12 @@ var App = (function() {
     identifyUser();
   }
   function applySettings() {
-    var names = { 'mgrs':'MGRS', 'latlng-dd':'Lat/Lng (DD)', 'latlng-dms':'Lat/Lng (DMS)', 'epsg-3375':'GDM2000 Peninsular RSO', 'epsg-3376':'GDM2000 East Malaysia RSO', 'epsg-3168':'Kertau 1968 Malaya RSO', 'epsg-29873':'Timbalai 1948 Borneo RSO' };
+    var names = { 'mgrs':'MGRS', 'latlng-dd':'Lat/Lng (DD)', 'latlng-dms':'Lat/Lng (DMS)', 'epsg-3375':'GDM2000 Peninsular RSO', 'epsg-3376':'GDM2000 East Malaysia RSO', 'epsg-3168':'Kertau 1968 Malaya RSO', 'epsg-29873':'Timbalai 1948 Borneo RSO', 'epsg-3377':'GDM2000 Johor Grid', 'epsg-3378':'GDM2000 Sembilan & Melaka Grid', 'epsg-3379':'GDM2000 Pahang Grid', 'epsg-3380':'GDM2000 Selangor Grid', 'epsg-3381':'GDM2000 Terengganu Grid', 'epsg-3382':'GDM2000 Pinang Grid', 'epsg-3383':'GDM2000 Kedah & Perlis Grid', 'epsg-3384':'GDM2000 Perak Grid', 'epsg-3385':'GDM2000 Kelantan Grid' };
     byId('format-display').textContent = names[fmt] || 'MGRS';
     Compass.setUnit(cunit);
     document.querySelectorAll('input[name="format"]').forEach(function(r) { r.checked = r.value === fmt; });
+    var stateGroup = byId('format-group-state');
+    if (stateGroup) { var fcode = parseInt((fmt || '').split('-')[1], 10); stateGroup.open = (fcode >= 3377 && fcode <= 3385); }
     document.querySelectorAll('input[name="compass-units"]').forEach(function(r) { r.checked = r.value === cunit; });
     document.querySelectorAll('input[name="map-type"]').forEach(function(r) { r.checked = r.value === mtype; });
     updPosReadout();

@@ -1,12 +1,29 @@
 /* ============================================================
    TACTICAL FIELD OPERATOR - Coordinate Transformation Engine
    Validated against pyproj ground truth (<=1cm error)
-   7 formats: MGRS, LatLng DD, LatLng DMS, EPSG 3375/3376/3168/29873
+   16 formats: MGRS, LatLng DD, LatLng DMS,
+   EPSG 3375/3376/3168/29873 (RSO) + 9 GDM2000 State Cassini Grids
+   (3377-3385)
    ============================================================ */
 
 (function() {
   var DEG = Math.PI / 180;
   var RAD = 180 / Math.PI;
+
+  /* ========== GDM2000 STATE CASSINI-SOLDNER GRIDS ==========
+     Authoritative proj4 parameters (EPSG database, validated
+     against pyproj). All use +proj=cass on GRS80. */
+  var GDM2000_GRIDS = [
+    { code: 3377, name: 'GDM2000 Johor Grid',            def: '+proj=cass +lat_0=2.12167974444444 +lon_0=103.427936236111 +x_0=-14810.562 +y_0=8758.32 +ellps=GRS80 +units=m +no_defs' },
+    { code: 3378, name: 'GDM2000 Sembilan & Melaka Grid', def: '+proj=cass +lat_0=2.68234763611111 +lon_0=101.974905041667 +x_0=3673.785 +y_0=-4240.573 +ellps=GRS80 +units=m +no_defs' },
+    { code: 3379, name: 'GDM2000 Pahang Grid',           def: '+proj=cass +lat_0=3.76938808888889 +lon_0=102.368298983333 +x_0=-7368.228 +y_0=6485.858 +ellps=GRS80 +units=m +no_defs' },
+    { code: 3380, name: 'GDM2000 Selangor Grid',         def: '+proj=cass +lat_0=3.68464905 +lon_0=101.389107913889 +x_0=-34836.161 +y_0=56464.049 +ellps=GRS80 +units=m +no_defs' },
+    { code: 3381, name: 'GDM2000 Terengganu Grid',       def: '+proj=cass +lat_0=4.9762852 +lon_0=103.070275625 +x_0=19594.245 +y_0=3371.895 +ellps=GRS80 +units=m +no_defs' },
+    { code: 3382, name: 'GDM2000 Pinang Grid',           def: '+proj=cass +lat_0=5.42151754166667 +lon_0=100.344376963889 +x_0=-23.414 +y_0=62.283 +ellps=GRS80 +units=m +no_defs' },
+    { code: 3383, name: 'GDM2000 Kedah & Perlis Grid',   def: '+proj=cass +lat_0=5.96467271388889 +lon_0=100.636371111111 +x_0=0 +y_0=0 +ellps=GRS80 +units=m +no_defs' },
+    { code: 3384, name: 'GDM2000 Perak Grid',            def: '+proj=cass +lat_0=4.85906302222222 +lon_0=100.815410586111 +x_0=-1.769 +y_0=133454.779 +ellps=GRS80 +units=m +no_defs' },
+    { code: 3385, name: 'GDM2000 Kelantan Grid',         def: '+proj=cass +lat_0=5.97254365833333 +lon_0=102.295241669444 +x_0=13227.851 +y_0=8739.894 +ellps=GRS80 +units=m +no_defs' }
+  ];
 
   /* ========== PROJ4 EPSG DEFINITIONS (verified against pyproj) ========== */
   if (typeof proj4 !== 'undefined') {
@@ -17,6 +34,9 @@
       ['EPSG:3168', '+proj=omerc +no_uoff +lat_0=4 +lonc=102.25 +alpha=323.0257905 +gamma=323.130102361111 +k=0.99984 +x_0=804670.24 +y_0=0 +a=6377295.664 +rf=300.8017 +towgs84=-11,851,5,0,0,0,0 +units=m +no_defs'],
       ['EPSG:29873','+proj=omerc +lat_0=4 +lonc=115 +alpha=53.3158204722222 +gamma=53.1301023611111 +k=0.99984 +x_0=590476.87 +y_0=442857.65 +a=6377298.556 +rf=300.8017 +towgs84=-679,669,-48,0,0,0,0 +units=m +no_defs'],
     ]);
+    for (var gi = 0; gi < GDM2000_GRIDS.length; gi++) {
+      proj4.defs('EPSG:' + GDM2000_GRIDS[gi].code, GDM2000_GRIDS[gi].def);
+    }
   }
 
   /* ========== EPSG CONVERSION ========== */
@@ -203,31 +223,31 @@
   /* ========== MASTER FORMAT/PARSE ========== */
   window.formatCoordinate = function(lat, lng, format) {
     if (lat == null || lng == null || isNaN(lat) || isNaN(lng)) return '-- --';
+    if (format && format.indexOf('epsg-') === 0) {
+      var epsg = parseInt(format.split('-')[1], 10);
+      var r = toEPSG(lat, lng, epsg);
+      return r ? Math.round(r.easting) + ' E  ' + Math.round(r.northing) + ' N' : '--';
+    }
     switch (format) {
       case 'mgrs': return window.latLngToMGRS(lat, lng) || '-- --';
       case 'latlng-dd': return window.latLngToDD(lat, lng);
       case 'latlng-dms': return window.latLngToDMS(lat, lng);
-      case 'epsg-3375': case 'epsg-3376': case 'epsg-3168': case 'epsg-29873': {
-        var epsg = parseInt(format.split('-')[1], 10);
-        var r = toEPSG(lat, lng, epsg);
-        return r ? Math.round(r.easting) + ' E  ' + Math.round(r.northing) + ' N' : '--';
-      }
       default: return window.latLngToMGRS(lat, lng) || '-- --';
     }
   };
 
   window.parseCoordinate = function(str, format) {
     if (!str || !str.trim()) return null;
+    if (format && format.indexOf('epsg-') === 0) {
+      var m = str.replace(/\s+/g, ' ').trim().match(/([+-]?[\d.]+)\s*[Ee]\s*([+-]?[\d.]+)\s*[Nn]/);
+      if (!m) return null;
+      var epsg = parseInt(format.split('-')[1], 10);
+      return fromEPSG(parseFloat(m[1]), parseFloat(m[2]), epsg);
+    }
     switch (format) {
       case 'mgrs': return window.mgrsToLatLng(str);
       case 'latlng-dd': return window.ddToLatLng(str);
       case 'latlng-dms': return window.dmsToLatLng(str);
-      case 'epsg-3375': case 'epsg-3376': case 'epsg-3168': case 'epsg-29873': {
-        var m = str.replace(/\s+/g, ' ').trim().match(/([\d.]+)\s*[Ee]\s*([\d.]+)\s*[Nn]/);
-        if (!m) return null;
-        var epsg = parseInt(format.split('-')[1], 10);
-        return fromEPSG(parseFloat(m[1]), parseFloat(m[2]), epsg);
-      }
       default: return window.mgrsToLatLng(str);
     }
   };
