@@ -884,6 +884,86 @@ body {
   gap: 4px;
 }
 
+/* ---------- CONVERT VIEW ---------- */
+#view-convert .settings-container { padding-bottom: 24px; }
+
+.convert-selects {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.convert-select-field {
+  flex: 1 1 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.convert-select-field label {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.convert-select-field select {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  border-radius: var(--radius);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.convert-select-field select:focus { border-color: var(--accent-green); outline: none; }
+
+.convert-hint {
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+#convert-input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  resize: vertical;
+  min-height: 90px;
+}
+
+.convert-output {
+  min-height: 60px;
+  padding: 10px 12px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.convert-empty { color: var(--text-muted); font-size: 12px; }
+.convert-line { display: flex; gap: 8px; align-items: baseline; }
+.convert-line + .convert-line { margin-top: 4px; }
+.convert-ok { color: var(--accent-green-glow); flex-shrink: 0; }
+.convert-err { color: var(--danger-bright); flex-shrink: 0; }
+.convert-val { word-break: break-word; }
+.convert-bad .convert-val { color: var(--text-muted); }
+.convert-bad .convert-val em { font-style: normal; color: var(--danger-bright); }
+
+.convert-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.convert-actions .btn { flex: 1; }
+
 /* ---------- DIALOGS ---------- */
 .dialog-overlay {
   position: fixed;
