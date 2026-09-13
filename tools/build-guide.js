@@ -192,7 +192,7 @@ function buildPage() {
     "@type": "HowTo",
     "name": "How to use MY Military Navigation",
     "description": desc,
-    "url": SITE + "/guide.html",
+    "url": SITE + "/guide",
     "step": [
       { "@type": "HowToStep", "position": 1, "name": "Install the app", "text": "Open the app in Safari or Chrome and use Add to Home Screen to install it." },
       { "@type": "HowToStep", "position": 2, "name": "Save a location", "text": "Use the COMPASS view SAVE button, or the MAP crosshair SAVE button." },
@@ -214,7 +214,7 @@ function buildPage() {
     "  <title>" + esc(title) + "</title>",
     '  <meta name="description" content="' + esc(desc) + '">',
     '  <meta name="robots" content="index, follow, max-image-preview:large">',
-    '  <link rel="canonical" href="' + SITE + '/guide.html">',
+    '  <link rel="canonical" href="' + SITE + '/guide">',
     '  <link rel="icon" type="image/svg+xml" href="icon.svg">',
     '  <link rel="preconnect" href="https://fonts.googleapis.com">',
     '  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
@@ -229,7 +229,7 @@ function buildPage() {
   const footer = [
     "<footer>",
     '  <p><a href="' + SITE + '/">&larr; Back to the GDM2000 converter app</a></p>',
-    '  <p><a href="' + SITE + '/gdm2000-converter.html">GDM2000 coordinate converter</a></p>',
+    '  <p><a href="' + SITE + '/gdm2000-converter">GDM2000 coordinate converter</a></p>',
     "</footer>",
   ].join("\n");
   const page = head + "\n<body>\n<main class=\"doc\">\n" + body + "\n" + footer + "\n</main>\n</body>\n</html>\n";

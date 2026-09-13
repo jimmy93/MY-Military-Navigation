@@ -56,6 +56,7 @@ function main() {
     check("  title present and <= 65 chars", title.length > 0 && title.length <= 65, title.length + " chars");
     check("  description present and <= 165 chars", desc.length > 0 && desc.length <= 165, desc.length + " chars");
     check("  canonical present", canonical.length > 0);
+    check("  canonical does NOT end in .html (server strips it)", canonical.length > 0 && !/\.html$/.test(canonical), canonical);
     check("  robots allows indexing", /index/.test(html) && !/noindex/.test(html));
     check("  has JSON-LD", ld.length > 0);
 
@@ -100,9 +101,12 @@ function main() {
   check("  has at least one <loc>", locs.length > 0, "found " + locs.length);
   locs.forEach(function(u) {
     const rel = u.replace(SITE + "/", "").replace(/\/$/, "");
-    const file = rel === "" ? "index.html" : rel;
+    // URLs are extensionless; the served file keeps its .html suffix.
+    const file = rel === "" ? "index.html"
+      : rel.endsWith(".html") ? rel : rel + ".html";
     check("  " + u + " exists on disk", fs.existsSync(path.join(ROOT, file)), "missing " + file);
   });
+  check("  no sitemap URL ends in .html", locs.every(function(u) { return !/\.html$/.test(u); }), locs.join(" "));
   check("  lastmod is not in the future", (function() {
     const m = sm.match(/<lastmod>(\d{4}-\d{2}-\d{2})<\/lastmod>/);
     if (!m) return false;

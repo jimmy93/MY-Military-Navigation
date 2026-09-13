@@ -36,6 +36,11 @@ node tools/verify-seo.js     # titles, H1s, JSON-LD, sitemap, robots, .gitignore
 are the indexable entry points and are listed in `sitemap.xml`. `guide.html` is
 generated — never edit it by hand.
 
+**URL convention:** the server strips `.html` and serves the extensionless form
+(`/guide`, `/gdm2000-converter`). All canonicals, `og:url`, JSON-LD `url` and
+sitemap entries must therefore use extensionless URLs — `verify-seo.js` enforces
+this. The files on disk keep their `.html` suffix.
+
 ---
 
 ## Release
