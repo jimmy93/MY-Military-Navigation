@@ -15,6 +15,8 @@
 * **Any Devices:** Works on any devices either Android, iOS, Windows, MacOS
 * **100% Privacy** Saved location will stored locally on user browser
 
+* **In-App User Guide:** The Info button (Compass view) opens a dialog with **ABOUT** and **GUIDE** tabs. The GUIDE tab is generated from `SIMPLE-USER-GUIDE.md` — run `node tools/build-guide.js` after editing it.
+
 ---
 
 ## Release

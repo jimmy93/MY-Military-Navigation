@@ -389,21 +389,45 @@ var App = (function() {
     byId('btn-request-location').addEventListener('click', function() { requestGPS(); toast('Requesting location...'); });
     byId('btn-request-orientation').addEventListener('click', function() { Compass.requestOrientation(); toast('Requesting compass...'); });
 
-    /* Info button */
+    /* Info dialog (ABOUT + GUIDE tabs, lazy-loaded & cached) */
+    var infoTab = 'about';
+    var infoCache = {};
+
+    function infoPanel(tab) {
+      var body = byId('info-body');
+      if (!body) return;
+      if (infoCache[tab]) { body.innerHTML = infoCache[tab]; return; }
+      var file = tab === 'guide' ? 'guide-dialog.html' : 'info-dialog.html';
+      body.innerHTML = '<div class="info-content"><p>Loading...</p></div>';
+      fetch(file).then(function(r) { return r.text(); }).then(function(html) {
+        var tmp = document.createElement('div');
+        tmp.innerHTML = html;
+        var content = tmp.querySelector('.info-content');
+        var inner = content ? content.outerHTML : html;
+        infoCache[tab] = inner;
+        if (infoTab === tab) body.innerHTML = inner;
+      }).catch(function() {
+        body.innerHTML = '<div class="info-content"><p>Failed to load.</p></div>';
+      });
+    }
+
+    function infoShow(tab) {
+      infoTab = tab;
+      document.querySelectorAll('.info-tab').forEach(function(b) {
+        b.classList.toggle('active', b.dataset.tab === tab);
+      });
+      infoPanel(tab);
+    }
+
     byId('btn-info').addEventListener('click', function() {
-      var dlg = byId('dialog-info');
-      if (!dlg.innerHTML) {
-        fetch('info-dialog.html').then(function(r) { return r.text(); }).then(function(html) {
-          dlg.innerHTML = html;
-          dlg.style.display = 'flex';
-        }).catch(function() {
-          dlg.innerHTML = '<div class="dialog dialog-info"><h3>ABOUT</h3><div class="info-content"><p>Failed to load info.</p></div><div class="dialog-actions"><button class="btn btn-tactical-accent" onclick="document.getElementById(\'dialog-info\').style.display=\'none\'">CLOSE</button></div></div>';
-          dlg.style.display = 'flex';
-        });
-      } else {
-        dlg.style.display = 'flex';
-      }
+      byId('dialog-info').style.display = 'flex';
+      infoShow(infoTab);
     });
+    document.querySelectorAll('.info-tab').forEach(function(b) {
+      b.addEventListener('click', function() { infoShow(b.dataset.tab); });
+    });
+    byId('btn-info-close').addEventListener('click', function() { byId('dialog-info').style.display = 'none'; });
+    byId('dialog-info').addEventListener('click', function(e) { if (e.target === byId('dialog-info')) byId('dialog-info').style.display = 'none'; });
 
     /* Map FABs */
     byId('fab-locate').addEventListener('click', function() { MapView.centerUser(); });

@@ -364,7 +364,18 @@
   </div>
 </div>
 
-<div class="dialog-overlay" id="dialog-info" style="display:none"></div>
+<div class="dialog-overlay" id="dialog-info" style="display:none">
+  <div class="dialog dialog-info">
+    <div class="info-tabs">
+      <button class="info-tab active" data-tab="about" data-umami-event="Click Info Tab About">ABOUT</button>
+      <button class="info-tab" data-tab="guide" data-umami-event="Click Info Tab Guide">GUIDE</button>
+    </div>
+    <div id="info-body"></div>
+    <div class="dialog-actions">
+      <button class="btn btn-tactical-accent" id="btn-info-close">CLOSE</button>
+    </div>
+  </div>
+</div>
 
 <!-- ELEVATION PROFILE DIALOG -->
 <div class="dialog-overlay" id="dialog-elevation" style="display:none">
