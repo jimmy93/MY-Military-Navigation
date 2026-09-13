@@ -8,11 +8,31 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
-  <title>MY Military Navigation – Tactical GPS & Grid Mapping Tool</title>
-  <meta name="title" content="Malaysia Military Navigation – Tactical GPS & Grid Mapping Tool">
-  <meta name="description" content="Malaysia tactical navigation app featuring real-time grid mapping support format GDM2000 conversion, waypoint management, and elevation profile.">
-  <meta name="robots" content="index, follow">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <title>GDM2000 Converter | Malaysia Military Grid &amp; GPS Tool</title>
+  <meta name="title" content="GDM2000 Converter | Malaysia Military Grid &amp; GPS Tool">
+  <meta name="description" content="Free GDM2000 coordinate converter for Malaysia. Convert GDM2000 to WGS84, MGRS, Lat/Lng and all 9 state Cassini grids (EPSG:3377-3385). Offline tactical GPS tool.">
+  <meta name="keywords" content="GDM2000, GDM2000 converter, GDM2000 conversion, GDM2000 to WGS84, GDM2000 military navigation, EPSG:3377, EPSG:3375, Cassini grid, MGRS, Malaysia coordinate converter, RSO Malaya">
+  <meta name="author" content="MY Military Navigation">
+  <meta name="robots" content="index, follow, max-image-preview:large">
   <link rel="canonical" href="https://military-navigation.jimmy.je/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="MY Military Navigation">
+  <meta property="og:locale" content="en_MY">
+  <meta property="og:url" content="https://military-navigation.jimmy.je/">
+  <meta property="og:title" content="GDM2000 Converter | Malaysia Military Grid &amp; GPS Tool">
+  <meta property="og:description" content="Free GDM2000 coordinate converter for Malaysia. Convert GDM2000 to WGS84, MGRS, Lat/Lng and all 9 state Cassini grids (EPSG:3377-3385).">
+  <meta property="og:image" content="https://military-navigation.jimmy.je/screenshot/Compass%20view.png">
+  <meta property="og:image:alt" content="MY Military Navigation compass view showing GDM2000 grid coordinates">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GDM2000 Converter | Malaysia Military Grid &amp; GPS Tool">
+  <meta name="twitter:description" content="Free GDM2000 coordinate converter for Malaysia. Convert GDM2000 to WGS84, MGRS, Lat/Lng and all 9 state Cassini grids (EPSG:3377-3385).">
+  <meta name="twitter:image" content="https://military-navigation.jimmy.je/screenshot/Compass%20view.png">
+
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,6 +40,125 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="manifest" href="manifest.json">
   <script defer src="https://umami.jimmy.je/script.js" data-website-id="c6b58bca-83ed-49e3-a8c2-ec47b3115c93" data-performance="true" ></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://military-navigation.jimmy.je/#website",
+        "url": "https://military-navigation.jimmy.je/",
+        "name": "MY Military Navigation",
+        "description": "GDM2000 coordinate converter and offline tactical navigation tool for Malaysia.",
+        "inLanguage": "en-MY"
+      },
+      {
+        "@type": ["WebApplication", "SoftwareApplication"],
+        "@id": "https://military-navigation.jimmy.je/#app",
+        "name": "MY Military Navigation",
+        "alternateName": "GDM2000 Converter",
+        "url": "https://military-navigation.jimmy.je/",
+        "applicationCategory": "UtilitiesApplication",
+        "applicationSubCategory": "Coordinate Converter",
+        "operatingSystem": "Android, iOS, Windows, macOS, Linux",
+        "browserRequirements": "Requires JavaScript and HTML5 geolocation.",
+        "description": "Free GDM2000 coordinate converter for Malaysia. Convert GDM2000 to WGS84, MGRS, Lat/Lng and all 9 state Cassini grids (EPSG:3377-3385). Works offline as an installable web app.",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "MYR" },
+        "featureList": [
+          "GDM2000 coordinate conversion",
+          "GDM2000 to WGS84 conversion",
+          "GDM2000 State Cassini Grids (EPSG:3377-3385)",
+          "MGRS military grid reference system",
+          "Lat/Lng decimal degrees and DMS",
+          "EPSG:3375 GDM2000 Peninsular RSO",
+          "EPSG:3376 GDM2000 East Malaysia BRSO",
+          "Real-time GPS position",
+          "Digital compass in MILS and degrees",
+          "Waypoint management and GPX/JSON export",
+          "Elevation profile"
+        ],
+        "screenshot": "https://military-navigation.jimmy.je/screenshot/Compass%20view.png"
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://military-navigation.jimmy.je/#org",
+        "name": "MY Military Navigation",
+        "url": "https://military-navigation.jimmy.je/",
+        "email": "hi@jimmy.je"
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://military-navigation.jimmy.je/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is GDM2000?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "GDM2000 (Geodetic Datum of Malaysia 2000) is the official geodetic datum of Malaysia, based on the GRS80 ellipsoid. It replaced the older Kertau 1968 and Timbalai 1948 datums and is used for mapping, surveying and cadastral work across Peninsular Malaysia, Sabah and Sarawak."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I convert GDM2000 to WGS84?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Open the CONVERT screen, set FROM to the GDM2000 format you have (for example EPSG:3377 or EPSG:3375) and set TO to Lat/Lng (DD). Paste one coordinate per line and the WGS84 result appears instantly. The converter also works in reverse, from WGS84 to GDM2000."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is EPSG:3377?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "EPSG:3377 is the GDM2000 Johor Grid, a Cassini-Soldner projection used for cadastral mapping in the state of Johor, Malaysia. Malaysia has nine of these state grids, EPSG:3377 to EPSG:3385."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which GDM2000 state Cassini grids are supported?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "All nine: EPSG:3377 Johor, EPSG:3378 Sembilan and Melaka, EPSG:3379 Pahang, EPSG:3380 Selangor, EPSG:3381 Terengganu, EPSG:3382 Pinang, EPSG:3383 Kedah and Perlis, EPSG:3384 Perak and EPSG:3385 Kelantan."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is GDM2000 the same as MGRS?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. GDM2000 is a geodetic datum for Malaysia, while MGRS (Military Grid Reference System) is a global grid notation built on UTM. This app supports both and can convert between them and Lat/Lng in any direction."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does the GDM2000 converter work offline?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Install it once from your browser to your home screen and it opens like a normal app and works offline. All conversion happens locally in your browser, so coordinates are never uploaded."
+            }
+          }
+        ]
+      },
+      {
+        "@type": "HowTo",
+        "@id": "https://military-navigation.jimmy.je/#howto",
+        "name": "How to convert GDM2000 coordinates",
+        "description": "Convert Malaysian GDM2000 coordinates to WGS84, MGRS or Lat/Lng using the free in-browser converter.",
+        "totalTime": "PT1M",
+        "step": [
+          { "@type": "HowToStep", "position": 1, "name": "Open CONVERT", "text": "Tap the CONVERT tab in the bottom navigation bar." },
+          { "@type": "HowToStep", "position": 2, "name": "Choose FROM", "text": "Set FROM to the format you are pasting in, for example EPSG:3377 GDM2000 Johor Grid." },
+          { "@type": "HowToStep", "position": 3, "name": "Choose TO", "text": "Set TO to the format you want out, for example Lat/Lng (DD) for WGS84." },
+          { "@type": "HowToStep", "position": 4, "name": "Paste coordinates", "text": "Type or paste one coordinate per line into the INPUT box. The OUTPUT box updates live as you type." },
+          { "@type": "HowToStep", "position": 5, "name": "Copy results", "text": "Tap COPY to copy all converted results to the clipboard." }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
 
@@ -38,7 +177,7 @@
 
 <!-- COMPASS VIEW -->
   <section id="view-compass" class="view active">
-    <div class="vp-brand">MILITARY NAVIGATION</div>
+    <h1 class="vp-brand">GDM2000 MILITARY NAVIGATION</h1>
     
     <!-- Support Coffee Button (Left) -->
     <button class="vp-coffee-btn" id="btn-support" title="Buy me a coffee" data-umami-event="Click Buy Me A Coffee">
@@ -275,6 +414,51 @@
           <button class="btn btn-tactical" id="btn-convert-clear">CLEAR</button>
         </div>
       </div>
+    </div>
+
+    <!-- GDM2000 reference content (crawlable, always in the DOM) -->
+    <div class="settings-container" id="about-gdm2000">
+      <h2>GDM2000 COORDINATE CONVERTER FOR MALAYSIA</h2>
+      <p class="seo-lede">This free tool converts between <strong>GDM2000</strong> (Geodetic Datum of Malaysia 2000), WGS84 latitude/longitude, MGRS military grid, and all nine GDM2000 State Cassini Grids. Everything runs locally in your browser — nothing is uploaded.</p>
+
+      <h3>WHAT IS GDM2000?</h3>
+      <p><strong>GDM2000</strong> is the official geodetic datum of Malaysia, realised on the GRS80 ellipsoid. It superseded the older Kertau 1968 (Peninsular Malaysia) and Timbalai 1948 (Sabah &amp; Sarawak) datums and is the standard for modern Malaysian mapping, surveying and cadastral work. Because GDM2000 is very close to WGS84, conversions between them are accurate to centimetres.</p>
+
+      <h3>SUPPORTED GDM2000 FORMATS</h3>
+      <table class="seo-table">
+        <thead><tr><th>EPSG</th><th>Name</th><th>Type</th><th>Area</th></tr></thead>
+        <tbody>
+          <tr><td>3375</td><td>GDM2000 / Peninsular RSO</td><td>Rectified Skew Orthomorphic</td><td>Peninsular Malaysia</td></tr>
+          <tr><td>3376</td><td>GDM2000 / East Malaysia BRSO</td><td>Rectified Skew Orthomorphic</td><td>Sabah &amp; Sarawak</td></tr>
+          <tr><td>3377</td><td>GDM2000 / Johor Grid</td><td>Cassini-Soldner</td><td>Johor</td></tr>
+          <tr><td>3378</td><td>GDM2000 / Sembilan &amp; Melaka Grid</td><td>Cassini-Soldner</td><td>Negeri Sembilan, Melaka</td></tr>
+          <tr><td>3379</td><td>GDM2000 / Pahang Grid</td><td>Cassini-Soldner</td><td>Pahang</td></tr>
+          <tr><td>3380</td><td>GDM2000 / Selangor Grid</td><td>Cassini-Soldner</td><td>Selangor</td></tr>
+          <tr><td>3381</td><td>GDM2000 / Terengganu Grid</td><td>Cassini-Soldner</td><td>Terengganu</td></tr>
+          <tr><td>3382</td><td>GDM2000 / Pinang Grid</td><td>Cassini-Soldner</td><td>Pulau Pinang</td></tr>
+          <tr><td>3383</td><td>GDM2000 / Kedah &amp; Perlis Grid</td><td>Cassini-Soldner</td><td>Kedah, Perlis</td></tr>
+          <tr><td>3384</td><td>GDM2000 / Perak Grid</td><td>Cassini-Soldner</td><td>Perak</td></tr>
+          <tr><td>3385</td><td>GDM2000 / Kelantan Grid</td><td>Cassini-Soldner</td><td>Kelantan</td></tr>
+        </tbody>
+      </table>
+
+      <h3>GDM2000 CONVERSION EXAMPLE</h3>
+      <p>Converting two WGS84 points to the GDM2000 Johor Grid (EPSG:3377):</p>
+      <pre class="seo-code">FROM: Lat/Lng (DD)        TO: EPSG:3377 (GDM2000 Johor Grid)
+
+2.0, 103.5        -&gt;   -6793 E  -4696 N
+1.5, 103.8        -&gt;   26593 E  -59981 N</pre>
+      <p>When entering a GDM2000 grid coordinate, use the <code>E&hellip;N</code> form, for example <code>-6793 E -4696 N</code>, rather than a comma-separated pair.</p>
+
+      <h3>GDM2000 FREQUENTLY ASKED QUESTIONS</h3>
+      <dl class="seo-faq">
+        <dt>How do I convert GDM2000 to WGS84?</dt>
+        <dd>Open the CONVERT screen, set FROM to your GDM2000 format (for example EPSG:3377 or EPSG:3375) and TO to Lat/Lng (DD). Paste one coordinate per line and the WGS84 result appears instantly. It also converts in reverse, from WGS84 to GDM2000.</dd>
+        <dt>Is GDM2000 the same as MGRS?</dt>
+        <dd>No. GDM2000 is a Malaysian geodetic datum, while MGRS is a global grid reference system built on UTM. This app supports both and converts between them and Lat/Lng in any direction.</dd>
+        <dt>Does this GDM2000 converter work offline?</dt>
+        <dd>Yes. Install it to your home screen and it opens like a native app with no network needed. All conversion is done locally, so coordinates never leave your device.</dd>
+      </dl>
     </div>
   </section>
 </main>

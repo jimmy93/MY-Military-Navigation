@@ -18,6 +18,8 @@ const path = require("path");
 const ROOT = path.resolve(__dirname, "..");
 const SRC = path.join(ROOT, "SIMPLE-USER-GUIDE.md");
 const OUT = path.join(ROOT, "guide-dialog.html");
+const PAGE_OUT = path.join(ROOT, "guide.html");
+const SITE = "https://military-navigation.jimmy.je";
 
 /* ----------------------------- inline markdown ----------------------------- */
 function esc(s) {
@@ -180,6 +182,60 @@ function build() {
   return wrap(parse(md)).replace(/\n/g, "\r\n");
 }
 
+/* Build a full standalone, indexable page from the same Markdown source. */
+function buildPage() {
+  const md = fs.readFileSync(SRC, "utf8");
+  const title = "MY Military Navigation — User Guide (GDM2000 Converter & GPS)";
+  const desc = "Step-by-step guide to MY Military Navigation: convert GDM2000 coordinates, use the MGRS grids, save waypoints, navigate, and export GPX/JSON.";
+  const ld = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How to use MY Military Navigation",
+    "description": desc,
+    "url": SITE + "/guide.html",
+    "step": [
+      { "@type": "HowToStep", "position": 1, "name": "Install the app", "text": "Open the app in Safari or Chrome and use Add to Home Screen to install it." },
+      { "@type": "HowToStep", "position": 2, "name": "Save a location", "text": "Use the COMPASS view SAVE button, or the MAP crosshair SAVE button." },
+      { "@type": "HowToStep", "position": 3, "name": "Convert GDM2000 coordinates", "text": "Open CONVERT, choose FROM and TO formats, then paste one coordinate per line." },
+      { "@type": "HowToStep", "position": 4, "name": "Navigate to a target", "text": "Open MAP, tap the navigate icon, set ORIGIN and DEST, then tap CONNECT and GO." }
+    ]
+  };
+  const body = parse(md)
+    .replace(/<h4>/g, "<h1>").replace(/<\/h4>/g, "</h1>")
+    .replace(/<h5>/g, "<h2>").replace(/<\/h5>/g, "</h2>")
+    .replace(/<h6>/g, "<h3>").replace(/<\/h6>/g, "</h3>");
+  const head = [
+    "<!DOCTYPE html>",
+    '<html lang="en">',
+    "<head>",
+    '  <meta charset="UTF-8">',
+    '  <meta name="viewport" content="width=device-width, initial-scale=1.0">',
+    '  <meta name="theme-color" content="#1c2b20">',
+    "  <title>" + esc(title) + "</title>",
+    '  <meta name="description" content="' + esc(desc) + '">',
+    '  <meta name="robots" content="index, follow, max-image-preview:large">',
+    '  <link rel="canonical" href="' + SITE + '/guide.html">',
+    '  <link rel="icon" type="image/svg+xml" href="icon.svg">',
+    '  <link rel="preconnect" href="https://fonts.googleapis.com">',
+    '  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
+    '  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">',
+    '  <link rel="stylesheet" href="css/style.css">',
+    '  <link rel="stylesheet" href="css/page.css">',
+    '  <script type="application/ld+json">',
+    "  " + JSON.stringify(ld, null, 2).replace(/\n/g, "\n  "),
+    "  </script>",
+    "</head>",
+  ].join("\n");
+  const footer = [
+    "<footer>",
+    '  <p><a href="' + SITE + '/">&larr; Back to the GDM2000 converter app</a></p>',
+    '  <p><a href="' + SITE + '/gdm2000-converter.html">GDM2000 coordinate converter</a></p>',
+    "</footer>",
+  ].join("\n");
+  const page = head + "\n<body>\n<main class=\"doc\">\n" + body + "\n" + footer + "\n</main>\n</body>\n</html>\n";
+  return page.replace(/\n/g, "\r\n");
+}
+
 function main() {
   if (!fs.existsSync(SRC)) {
     console.error("Source not found: " + SRC);
@@ -187,10 +243,12 @@ function main() {
   }
   const html = build();
   fs.writeFileSync(OUT, html);
+  fs.writeFileSync(PAGE_OUT, buildPage());
   const h2 = (fs.readFileSync(SRC, "utf8").match(/^##\s+/gm) || []).length;
   console.log("Wrote " + path.relative(ROOT, OUT) + " (" + h2 + " sections)");
+  console.log("Wrote " + path.relative(ROOT, PAGE_OUT) + " (standalone page)");
 }
 
 if (require.main === module) main();
 
-module.exports = { parse: parse, wrap: wrap, build: build, SRC: SRC, OUT: OUT };
+module.exports = { parse: parse, wrap: wrap, build: build, buildPage: buildPage, SRC: SRC, OUT: OUT, PAGE_OUT: PAGE_OUT };

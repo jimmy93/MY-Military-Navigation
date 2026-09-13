@@ -925,6 +925,96 @@ body {
 /* ---------- CONVERT VIEW ---------- */
 #view-convert .settings-container { padding-bottom: 24px; }
 
+/* ---------- GDM2000 REFERENCE CONTENT (crawlable) ---------- */
+#about-gdm2000 { padding-top: 8px; border-top: 1px solid var(--border-color); }
+
+#about-gdm2000 h2 { font-size: 15px; }
+
+#about-gdm2000 h3 {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin: 20px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+#about-gdm2000 p {
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+}
+
+#about-gdm2000 .seo-lede {
+  color: var(--text-primary);
+  font-size: 12px;
+}
+
+#about-gdm2000 code {
+  font-family: var(--font-mono);
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  padding: 1px 5px;
+  color: var(--accent-green-glow);
+}
+
+.seo-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0 14px;
+  font-size: 11px;
+}
+
+.seo-table th,
+.seo-table td {
+  border: 1px solid var(--border-color);
+  padding: 6px 8px;
+  text-align: left;
+  color: var(--text-secondary);
+}
+
+.seo-table th {
+  background: var(--bg-secondary);
+  color: var(--accent-green-bright);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.seo-table td:first-child {
+  color: var(--accent-green-glow);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.seo-code {
+  background: var(--bg-input);
+  border-left: 3px solid var(--accent-green);
+  padding: 10px 14px;
+  margin: 10px 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.seo-faq dt {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent-green-bright);
+  margin-top: 12px;
+}
+
+.seo-faq dd {
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin: 4px 0 0;
+}
+
 .convert-selects {
   display: flex;
   gap: 8px;

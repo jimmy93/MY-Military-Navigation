@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1c2b20">
+  <title>GDM2000 Converter — Free Malaysia Coordinate Converter</title>
+  <meta name="description" content="Free online GDM2000 converter. Convert GDM2000 to WGS84, MGRS, Lat/Lng and all 9 state Cassini grids (EPSG:3377-3385) instantly in your browser. Works offline.">
+  <meta name="keywords" content="GDM2000 converter, GDM2000 conversion, GDM2000 to WGS84, GDM2000 to MGRS, EPSG:3377, EPSG:3375, Cassini grid converter, Malaysia coordinate converter">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://military-navigation.jimmy.je/gdm2000-converter.html">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="MY Military Navigation">
+  <meta property="og:locale" content="en_MY">
+  <meta property="og:url" content="https://military-navigation.jimmy.je/gdm2000-converter.html">
+  <meta property="og:title" content="GDM2000 Converter — Free Malaysia Coordinate Converter">
+  <meta property="og:description" content="Convert GDM2000 to WGS84, MGRS, Lat/Lng and all 9 state Cassini grids (EPSG:3377-3385) instantly in your browser.">
+  <meta property="og:image" content="https://military-navigation.jimmy.je/screenshot/Compass%20view.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="GDM2000 Converter — Free Malaysia Coordinate Converter">
+  <meta name="twitter:description" content="Convert GDM2000 to WGS84, MGRS, Lat/Lng and all 9 state Cassini grids (EPSG:3377-3385) instantly in your browser.">
+  <meta name="twitter:image" content="https://military-navigation.jimmy.je/screenshot/Compass%20view.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/page.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "GDM2000 Converter",
+    "url": "https://military-navigation.jimmy.je/gdm2000-converter.html",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "MYR" },
+    "description": "Free online GDM2000 coordinate converter for Malaysia. Converts GDM2000 to WGS84, MGRS, Lat/Lng and all nine state Cassini grids (EPSG:3377-3385).",
+    "featureList": [
+      "GDM2000 to WGS84",
+      "GDM2000 to MGRS",
+      "GDM2000 to Lat/Lng (DD and DMS)",
+      "EPSG:3377 to EPSG:3385 state Cassini grids",
+      "Batch conversion, one coordinate per line"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is GDM2000?",
+        "acceptedAnswer": { "@type": "Answer", "text": "GDM2000 (Geodetic Datum of Malaysia 2000) is the official geodetic datum of Malaysia, based on the GRS80 ellipsoid. It replaced Kertau 1968 and Timbalai 1948 and is used for mapping, surveying and cadastral work nationwide." }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I convert GDM2000 to WGS84?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Set FROM to your GDM2000 format (for example EPSG:3375 or EPSG:3377) and TO to Lat/Lng (DD), then paste one coordinate per line. The WGS84 result appears instantly. It also converts WGS84 back to GDM2000." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is GDM2000 the same as WGS84?",
+        "acceptedAnswer": { "@type": "Answer", "text": "They are very close but not identical. Both use the GRS80/WGS84 ellipsoid, so the difference is at the sub-metre level for most Malaysian work. For survey-grade accuracy, use the EPSG transformation appropriate to the state grid." }
+      },
+      {
+        "@type": "Question",
+        "name": "What are the GDM2000 state Cassini grid EPSG codes?",
+        "acceptedAnswer": { "@type": "Answer", "text": "EPSG:3377 Johor, 3378 Sembilan and Melaka, 3379 Pahang, 3380 Selangor, 3381 Terengganu, 3382 Pinang, 3383 Kedah and Perlis, 3384 Perak and 3385 Kelantan." }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+<main class="doc">
+
+  <h1>GDM2000 Converter</h1>
+  <p class="seo-lede">Convert <strong>GDM2000</strong> coordinates to WGS84, MGRS, Lat/Lng and all nine Malaysian state Cassini grids — free, in your browser, with nothing uploaded.</p>
+
+  <section class="converter-tool" aria-label="GDM2000 coordinate converter">
+    <h2>Convert now</h2>
+    <div class="settings-group">
+      <h3>CONVERSION</h3>
+      <div class="convert-selects">
+        <div class="convert-select-field">
+          <label>FROM</label>
+          <select id="convert-from"></select>
+        </div>
+        <div class="convert-select-field">
+          <label>TO</label>
+          <select id="convert-to"></select>
+        </div>
+      </div>
+    </div>
+    <div class="settings-group">
+      <h3>INPUT <span class="convert-hint">(one coordinate per line)</span></h3>
+      <textarea id="convert-input" rows="5" placeholder="Enter one coordinate per line&#10;e.g. 3.2, 101.4&#10;e.g. -6793 E -4696 N"></textarea>
+    </div>
+    <div class="settings-group">
+      <h3>OUTPUT</h3>
+      <div id="convert-output" class="convert-output"></div>
+      <div class="convert-actions">
+        <button class="btn btn-tactical" id="btn-convert-copy" type="button">COPY</button>
+        <button class="btn btn-tactical" id="btn-convert-clear" type="button">CLEAR</button>
+      </div>
+    </div>
+  </section>
+
+  <h2>What is GDM2000?</h2>
+  <p><strong>GDM2000</strong> — the Geodetic Datum of Malaysia 2000 — is the national geodetic datum of Malaysia. It is realised on the GRS80 ellipsoid and replaced the older Kertau 1968 (Peninsular Malaysia) and Timbalai 1948 (Sabah &amp; Sarawak) datums. It is the reference frame used by JUPEM and is standard for modern Malaysian mapping, surveying and cadastral work.</p>
+
+  <h2>How to convert GDM2000 coordinates</h2>
+  <ol>
+    <li>Set <strong>FROM</strong> to the GDM2000 format you are pasting in — for example <code>EPSG:3377 — GDM2000 Johor Grid</code>.</li>
+    <li>Set <strong>TO</strong> to the format you want out — for example <code>Lat/Lng (DD)</code> for WGS84, or <code>MGRS</code>.</li>
+    <li>Type or paste your coordinates in the <strong>INPUT</strong> box, <strong>one coordinate per line</strong>.</li>
+    <li>The <strong>OUTPUT</strong> box updates live. Tap <strong>COPY</strong> to copy every result.</li>
+  </ol>
+  <div class="note">When entering a GDM2000 grid coordinate, use the <code>E&hellip;N</code> form, for example <code>-6793 E -4696 N</code>, rather than a comma-separated pair.</div>
+
+  <h2>Supported GDM2000 grids and EPSG codes</h2>
+  <table>
+    <thead><tr><th>EPSG</th><th>Name</th><th>Type</th><th>Area</th></tr></thead>
+    <tbody>
+      <tr><td>3375</td><td>GDM2000 / Peninsular RSO</td><td>Rectified Skew Orthomorphic</td><td>Peninsular Malaysia</td></tr>
+      <tr><td>3376</td><td>GDM2000 / East Malaysia BRSO</td><td>Rectified Skew Orthomorphic</td><td>Sabah &amp; Sarawak</td></tr>
+      <tr><td>3377</td><td>GDM2000 / Johor Grid</td><td>Cassini-Soldner</td><td>Johor</td></tr>
+      <tr><td>3378</td><td>GDM2000 / Sembilan &amp; Melaka Grid</td><td>Cassini-Soldner</td><td>Negeri Sembilan, Melaka</td></tr>
+      <tr><td>3379</td><td>GDM2000 / Pahang Grid</td><td>Cassini-Soldner</td><td>Pahang</td></tr>
+      <tr><td>3380</td><td>GDM2000 / Selangor Grid</td><td>Cassini-Soldner</td><td>Selangor</td></tr>
+      <tr><td>3381</td><td>GDM2000 / Terengganu Grid</td><td>Cassini-Soldner</td><td>Terengganu</td></tr>
+      <tr><td>3382</td><td>GDM2000 / Pinang Grid</td><td>Cassini-Soldner</td><td>Pulau Pinang</td></tr>
+      <tr><td>3383</td><td>GDM2000 / Kedah &amp; Perlis Grid</td><td>Cassini-Soldner</td><td>Kedah, Perlis</td></tr>
+      <tr><td>3384</td><td>GDM2000 / Perak Grid</td><td>Cassini-Soldner</td><td>Perak</td></tr>
+      <tr><td>3385</td><td>GDM2000 / Kelantan Grid</td><td>Cassini-Soldner</td><td>Kelantan</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Worked example</h2>
+  <p>Converting two WGS84 points to the GDM2000 Johor Grid (EPSG:3377):</p>
+  <pre><code>FROM: Lat/Lng (DD)        TO: EPSG:3377 (GDM2000 Johor Grid)
+
+2.0, 103.5        ->   -6793 E  -4696 N
+1.5, 103.8        ->   26593 E  -59981 N</code></pre>
+
+  <h2>Frequently asked questions</h2>
+  <dl>
+    <dt>Is GDM2000 the same as WGS84?</dt>
+    <dd>Very close, but not identical. Both are based on the GRS80/WGS84 ellipsoid, so the difference is sub-metre for most work. For survey-grade accuracy, apply the EPSG transformation for the specific state grid.</dd>
+    <dt>Does this converter work offline?</dt>
+    <dd>Yes. The page works offline once loaded, and all conversion happens in your browser — coordinates are never uploaded.</dd>
+    <dt>Can I convert many coordinates at once?</dt>
+    <dd>Yes. Paste one coordinate per line and the whole batch converts at once.</dd>
+  </dl>
+
+  <h2>Related</h2>
+  <ul>
+    <li><a href="https://military-navigation.jimmy.je/">MY Military Navigation — full GDM2000 GPS &amp; compass app</a></li>
+    <li><a href="https://military-navigation.jimmy.je/guide.html">User guide (all screens)</a></li>
+  </ul>
+
+</main>
+
+<script src="https://unpkg.com/proj4@2.11.0/dist/proj4.js"></script>
+<script src="js/coordinates.js"></script>
+<script src="js/convert.js"></script>
+</body>
+</html>

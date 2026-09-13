@@ -1,0 +1,192 @@
+/* ============================================================
+   Standalone content pages (guide.html, gdm2000-converter.html)
+   Reuses the app's design tokens from style.css.
+   ============================================================ */
+
+html, body {
+  height: auto;
+  min-height: 100%;
+  overflow: visible;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+body {
+  display: block;
+  background: var(--bg-primary);
+}
+
+/* style.css disables selection globally (app UI); content pages need it back. */
+.doc, .doc * {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.doc {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 28px 20px 60px;
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+.doc h1 {
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  color: var(--accent-green-bright);
+  margin: 0 0 18px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--accent-green);
+  text-transform: uppercase;
+}
+
+.doc h2 {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent-green-bright);
+  margin: 28px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border-color);
+  text-transform: uppercase;
+}
+
+.doc h3 {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--text-primary);
+  margin: 18px 0 8px;
+}
+
+.doc p, .doc li, .doc dd {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.doc strong { color: var(--text-primary); }
+
+.doc .seo-lede {
+  font-size: 14px;
+  color: var(--text-primary);
+  margin-bottom: 18px;
+}
+
+.doc a {
+  color: var(--accent-green-glow);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.doc a:hover { color: var(--accent-green-bright); }
+
+.doc ul, .doc ol { margin: 0 0 14px; padding-left: 22px; }
+.doc li { margin-bottom: 5px; }
+
+.doc hr {
+  border: 0;
+  border-top: 1px solid var(--border-color);
+  margin: 26px 0;
+}
+
+.doc code {
+  font-family: var(--font-mono);
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  padding: 1px 5px;
+  font-size: 12px;
+  color: var(--accent-green-glow);
+}
+
+.doc pre {
+  background: var(--bg-input);
+  border-left: 3px solid var(--accent-green);
+  padding: 12px 16px;
+  margin: 12px 0;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.doc pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.doc .note {
+  background: var(--bg-secondary);
+  border-left: 3px solid var(--accent-orange);
+  padding: 10px 14px;
+  margin: 12px 0;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0 18px;
+  font-size: 12px;
+}
+
+.doc th, .doc td {
+  border: 1px solid var(--border-color);
+  padding: 7px 9px;
+  text-align: left;
+  color: var(--text-secondary);
+}
+
+.doc th {
+  background: var(--bg-secondary);
+  color: var(--accent-green-bright);
+  font-weight: 700;
+}
+
+.doc dl { margin: 0 0 16px; }
+.doc dt { font-weight: 700; color: var(--accent-green-bright); margin-top: 12px; font-size: 13px; }
+.doc dd { margin: 4px 0 0; }
+
+.doc footer {
+  margin-top: 40px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color);
+  font-size: 12px;
+}
+
+.doc footer p { margin-bottom: 6px; }
+
+/* ---- embedded converter (gdm2000-converter.html) ---- */
+.converter-tool {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-heavy);
+  padding: 18px;
+  margin: 20px 0 28px;
+}
+
+.converter-tool h2 { margin-top: 0; border-bottom: 0; padding-bottom: 0; }
+
+.converter-tool .settings-group { margin-bottom: 16px; }
+
+.converter-tool h3 {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin: 0 0 8px;
+}
+
+.converter-tool textarea {
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+.doc .convert-output { min-height: 60px; }
+
+@media (max-width: 600px) {
+  .doc { padding: 20px 14px 48px; }
+  .doc h1 { font-size: 18px; }
+}

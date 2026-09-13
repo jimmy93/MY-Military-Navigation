@@ -19,6 +19,25 @@
 
 ---
 
+## Build & verification
+
+This repo has no CI pipeline; the generators and checks are run manually.
+
+```bash
+node tools/build-guide.js    # regenerate guide-dialog.html (dialog) + guide.html (SEO page)
+node tools/verify-guide.js   # guide fragment in sync with the .md
+node tools/verify-info.js    # Info dialog tabs + fragment contract
+node tools/verify-convert.js # coordinate converter
+node tools/verify-grids.js   # GDM2000 grids vs pyproj ground truth
+node tools/verify-seo.js     # titles, H1s, JSON-LD, sitemap, robots, .gitignore
+```
+
+**SEO pages:** `index.html` (the app), `guide.html` and `gdm2000-converter.html`
+are the indexable entry points and are listed in `sitemap.xml`. `guide.html` is
+generated — never edit it by hand.
+
+---
+
 ## Release
 
 [https://military-navigation.jimmy.je](https://military-navigation.jimmy.je/)

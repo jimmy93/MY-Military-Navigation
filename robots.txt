@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://military-navigation.jimmy.je/sitemap.xml
